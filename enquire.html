@@ -1,0 +1,108 @@
+---
+title: Enquire
+page_id: enquire
+permalink: /enquire/
+---
+<header class="split-header wrap">
+  <div>
+    <p class="eyebrow">Get involved</p>
+    <h1>
+      A product,<br>
+      a question, an idea.
+    </h1>
+    <p class="lead">
+      Whether you’re curious about a piece, the materials or a collaboration, this is a place to begin.
+    </p>
+  </div>
+  <figure class="">
+    <img
+      class=""
+      src="{{ '/assets/images/real-products/tote-bag.webp' | relative_url }}"
+      alt="Actual TAMANG botanical Tote Bag outdoors"
+      loading="lazy"
+      width="1200"
+      height="900"
+    >
+  </figure>
+</header>
+<div class="enquiry-workbench page-pad">
+  <section class="correspondence-form" aria-label="Prepare an enquiry">
+    <h2>What’s on your mind?</h2>
+    <form id="enquiry-form">
+      <label for="enquiry-name">Your name</label
+      ><input id="enquiry-name" name="name" autocomplete="name" maxlength="120" required
+      ><label for="enquiry-email">Email address</label
+      ><input id="enquiry-email" name="email" type="email" autocomplete="email" maxlength="254" required
+      ><label for="enquiry-interest">I’m interested in</label
+      ><select id="enquiry-interest" name="interest">
+        <option value="product">A product</option>
+        <option value="materials">The materials</option>
+        <option value="collaboration">A collaboration</option>
+        <option value="other">Something else</option></select
+      ><label for="enquiry-piece">A particular piece <span class="muted">(optional)</span></label
+      ><select id="enquiry-piece" name="piece">
+        <option value="">Choose a piece</option>
+        {% assign products = site.products | sort: 'number' -%}
+        {%- for product in products %}
+          <option value="{{ product.slug }}">{{ product.title }}</option>
+        {% endfor %}</select
+      ><label for="enquiry-message">Your message</label
+      ><textarea id="enquiry-message" name="message" rows="3" maxlength="5000" required></textarea
+      ><button class="button" type="submit">
+        <span>Prepare enquiry</span><span class="action-icon">{% include arrow.html %}</span>
+      </button>
+      <p class="small muted">Prepare an enquiry to copy or download. Nothing is sent automatically.</p>
+    </form>
+  </section>
+  <aside class="enquiry-side">
+    <section id="saved-section" class="saved-section" aria-labelledby="saved-title">
+      <h2 id="saved-title">Your saved pieces.</h2>
+      <div id="saved-items"></div>
+      <p id="saved-empty">Save a product while browsing, or choose one in the enquiry form.</p>
+    </section>
+    <div class="correspondence-address">
+      <span>Kakani, Nuwakot, Nepal.</span
+      ><a href="{{ site.data.instagram.profile_url }}" target="_blank" rel="noopener noreferrer"
+        >@{{ site.data.instagram.username }} ↗</a
+      >
+    </div>
+  </aside>
+</div>
+<section class="enquiry-prompts-section wrap">
+  <p class="eyebrow">A starting point</p>
+  <h2>What would you like to know?</h2>
+  <div class="enquiry-prompts">
+    <button data-enquiry-prompt="product">Size & availability ↗</button
+    ><button data-enquiry-prompt="materials">A material’s story ↗</button
+    ><button data-enquiry-prompt="collaboration">A possible collaboration ↗</button>
+  </div>
+</section>
+<section id="enquiry-output" class="enquiry-output page-pad" hidden aria-labelledby="draft-title">
+  <h2 id="draft-title" tabindex="-1">Your enquiry, ready.</h2>
+  <p>Copy this note or download it, then contact TAMANG through the current website.</p>
+  <label class="sr-only" for="enquiry-draft">Prepared enquiry</label
+  ><textarea id="enquiry-draft" rows="12" readonly></textarea>
+  <div class="draft-actions">
+    <button id="copy-enquiry" class="link">Copy enquiry ↗</button
+    ><button id="download-enquiry" class="link">Download note ↓</button
+    ><a class="link" href="https://tamangnepal.org/" target="_blank" rel="noopener noreferrer">Contact TAMANG ↗</a>
+  </div>
+  <p id="copy-status" class="small" role="status">Nothing has been sent.</p>
+</section>
+
+<aside class="enquiry-handoff page-pad">
+  <p class="eyebrow">From note to conversation</p>
+  <ol>
+    <li>
+      <span>01 / Prepare</span>
+      <p>Complete the form. Review the note and the pieces included.</p>
+    </li>
+    <li>
+      <span>02 / Send</span>
+      <p>
+        Copy or download it, then use Contact TAMANG to reach the current website. Nothing is sent automatically from
+        this website.
+      </p>
+    </li>
+  </ol>
+</aside>

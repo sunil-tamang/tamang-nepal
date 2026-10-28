@@ -1,0 +1,49 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "TAMANG: Preview prebuilt site",
+      "type": "process",
+      "command": "bash",
+      "args": ["Preview.command"],
+      "windows": {
+        "command": "cmd",
+        "args": ["/c", "Preview.bat"]
+      },
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "TAMANG: Start Jekyll for editing (Mac/Linux)",
+      "type": "process",
+      "command": "bash",
+      "args": ["scripts/serve.sh"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "Jekyll: Build",
+      "type": "process",
+      "command": "bash",
+      "args": ["scripts/build.sh"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": [],
+      "windows": {
+        "command": "bundle",
+        "args": ["exec", "jekyll", "build"]
+      }
+    }
+  ]
+}

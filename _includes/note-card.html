@@ -1,0 +1,16 @@
+<article class="note-card" data-note-card data-category="{{ include.note.category }}">
+  <a class="note-image" href="{{ include.note.url | relative_url }}"
+    ><img
+      src="{{ include.note.image | relative_url }}"
+      alt="{{ include.note.image_alt | escape }}"
+      width="1200"
+      height="900"
+      loading="lazy"
+  ></a>
+  <p class="eyebrow">{{ include.note.category }} / Notebook</p>
+  <h2>
+    <a href="{{ include.note.url | relative_url }}">{{ include.note.title }}</a>
+  </h2>
+  <p>{{ include.note.description }}</p>
+  <a class="link" href="{{ include.note.url | relative_url }}">Read the note ↗</a>
+</article>

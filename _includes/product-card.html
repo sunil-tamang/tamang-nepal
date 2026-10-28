@@ -1,0 +1,35 @@
+<article
+  class="product-object"
+  data-product-card
+  data-category="{{ include.product.category }}"
+  data-material="{{ include.product.material }}"
+  data-title="{{ include.product.title | downcase }}"
+  data-number="{{ include.product.number }}"
+>
+  <a class="product-object-image" href="{{ include.product.url | relative_url }}"
+    ><img
+      src="{{ include.product.image | relative_url }}"
+      alt="{{ include.product.image_alt | escape }}"
+      width="{{ include.product.image_width | default: 1536 }}"
+      height="{{ include.product.image_height | default: 1024 }}"
+      loading="lazy"
+  ></a>
+  <div class="product-object-label">
+    <div class="product-object-name">
+      <span class="product-index">{{ include.product.number | prepend: '0' }} / {{ include.product.category }}</span>
+      <a href="{{ include.product.url | relative_url }}">
+        {{- include.product.title }}
+        <span aria-hidden="true">↗</span></a
+      >
+    </div>
+    <button
+      class="save-piece"
+      data-save="{{ include.product.slug }}"
+      aria-pressed="false"
+      aria-label="Save {{ include.product.title }}"
+    >
+      ＋
+    </button>
+  </div>
+  <p class="product-use-label">{{ include.product.use_short }}</p>
+</article>

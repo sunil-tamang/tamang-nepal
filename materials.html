@@ -1,0 +1,219 @@
+---
+title: Materials & process
+page_id: materials
+permalink: /materials/
+---
+<header class="split-header wrap">
+  <div>
+    <p class="eyebrow">Materials / Different origins</p>
+    <h1>
+      Another beginning.<br>
+      A useful next life.
+    </h1>
+    <p class="lead">
+      Recovered plastic, existing textiles and naturally dyed cloth. Follow their different paths into everyday things.
+    </p>
+  </div>
+  <figure class="">
+    <img
+      class=""
+      src="{{ '/assets/images/editorial/recovered-textiles.webp' | relative_url }}"
+      alt="Illustrative folds of blue, olive and cream recovered fabric"
+      loading="lazy"
+      width="1200"
+      height="900"
+    >
+  </figure>
+</header>
+<section class="transformation page-pad" aria-labelledby="transformation-title">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">An example, in four stages</p>
+      <h2 id="transformation-title">
+        From material<br>
+        to everyday.
+      </h2>
+    </div>
+    <p>Follow the plastic handwork, the separate dyed cloth, and how they can come together in a Laptop Cover.</p>
+  </div>
+  <div class="process-layout">
+    <div class="process-image">
+      <img
+        id="process-image"
+        src="{{ '/assets/images/editorial/polythene.webp' | relative_url }}"
+        data-origin-image="{{ '/assets/images/editorial/polythene.webp' | relative_url }}"
+        data-making-image="{{ '/assets/images/brand/community.webp' | relative_url }}"
+        data-fabric-image="{{ '/assets/images/editorial/natural-dye.webp' | relative_url }}"
+        data-piece-image="{{ '/assets/images/real-products/laptop-cover-original.jpg' | relative_url }}"
+        alt="Illustrative recovered polythene bags and prepared strips"
+        width="518"
+        height="772"
+      >
+    </div>
+    <div class="process-copy">
+      <p class="eyebrow" id="process-number">01 / Collect & prepare</p>
+      <h2 id="process-title">A different beginning.</h2>
+      <p id="process-description">
+        Discarded plastic is collected, cleaned and sorted. Its next use begins with care for what is already here.
+      </p>
+      <div class="step-controls">
+        <button id="process-prev" aria-label="Previous making stage" disabled>←</button
+        ><span id="process-position" aria-live="polite">01 / 04</span
+        ><button id="process-next" aria-label="Next making stage">→</button>
+      </div>
+    </div>
+  </div>
+  <div class="process-steps" role="group" aria-label="Making stages">
+    <button data-stage="0" aria-pressed="true">01 <span>Collect & prepare</span></button
+    ><button data-stage="1" aria-pressed="false">02 <span>Crochet by hand</span></button
+    ><button data-stage="2" aria-pressed="false">03 <span>Pair with dyed cloth</span></button
+    ><button data-stage="3" aria-pressed="false">04 <span>Make the piece</span></button>
+  </div>
+  <p class="process-note">
+    An example of one construction. Other pieces follow different processes. The naturally dyed fabric is purchased
+    cloth dyed by a collaborator, separate from the recovered plastic.
+  </p>
+</section>
+<section class="material-library page-pad" aria-labelledby="library-title">
+  <div class="section-heading">
+    <h2 id="library-title">Different beginnings.</h2>
+    <p>Recovered materials and naturally dyed fabrics have different origins.</p>
+  </div>
+  <div class="material-tabs" role="tablist" aria-label="Material stories">
+    {% for material in site.data.materials -%}
+      <button
+        id="tab-{{ material.id }}"
+        role="tab"
+        aria-controls="panel-{{ material.id }}"
+        aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+        tabindex="{% if forloop.first %}0{% else %}-1{% endif %}"
+        data-material="{{ material.id }}"
+      >
+        <img src="{{ material.photo | relative_url }}" alt="" width="1536" height="1024" loading="lazy"
+        ><span>{{ material.title }}</span>
+      </button>
+    {%- endfor %}
+  </div>
+  {% for material in site.data.materials %}
+    <div
+      id="panel-{{ material.id }}"
+      class="material-panel"
+      role="tabpanel"
+      aria-labelledby="tab-{{ material.id }}"
+      tabindex="0"
+      {% unless forloop.first %}
+        hidden
+      {% endunless %}
+    >
+      <figure class="material-photo">
+        <img
+          src="{{ material.photo | relative_url }}"
+          alt="{{ material.photo_alt | escape }}"
+          width="1536"
+          height="1024"
+          loading="lazy"
+        >
+        <figcaption>{{ material.caption }}</figcaption>
+      </figure>
+      <div class="material-story">
+        <p class="eyebrow">Material / {{ forloop.index | prepend: '0' }}</p>
+        <h3>{{ material.title }}</h3>
+        <p class="lead">{{ material.intro }}</p>
+        <dl class="material-facts">
+          <div>
+            <dt>Beginning</dt>
+            <dd>{{ material.origin }}</dd>
+          </div>
+          <div>
+            <dt>Transformation</dt>
+            <dd>{{ material.process }}</dd>
+          </div>
+          <div>
+            <dt>Next life</dt>
+            <dd>{{ material.result }}</dd>
+          </div>
+        </dl>
+        <div class="material-reading">
+          {% for detail in material.details %}
+            <div>
+              <h4>{{ detail.title }}</h4>
+              <p>{{ detail.text }}</p>
+            </div>
+          {% endfor %}
+        </div>
+        <p class="small muted">{{ material.note }}</p>
+        <a class="link" href="{{ '/collection/' | relative_url }}?category={{ material.category | url_encode }}"
+          >Explore the collection ↗</a
+        >
+      </div>
+    </div>
+  {% endfor %}
+</section>
+
+<section class="paper-band">
+  <div class="editorial-split wrap">
+    <figure class="">
+      <img
+        class=""
+        src="{{ '/assets/images/editorial/natural-dye.webp' | relative_url }}"
+        alt="Illustrative naturally dyed cloth with botanical marks"
+        loading="lazy"
+        width="1200"
+        height="900"
+      >
+      <figcaption>Purchased cloth, naturally dyed · Illustrative photograph</figcaption>
+    </figure>
+    <div>
+      <p class="eyebrow">A separate material story</p>
+      <h2>
+        Colour with<br>
+        its own character.
+      </h2>
+      <p>
+        We buy fabric and a collaborator dyes it using natural materials. Botanical marks and colour bring variation to
+        the cloth.
+      </p>
+      <p>Depending on the product, this fabric can appear on its own or alongside recovered materials.</p>
+      <a class="link" href="{{ '/materials/?material=dyed#library-title' | relative_url }}"
+        >Explore the cloth <span aria-hidden="true">↗</span></a
+      >
+    </div>
+  </div>
+</section>
+<aside class="material-last-note page-pad">
+  <p class="eyebrow">Read the actual piece</p>
+  <p>
+    These are different origins, not one universal recipe. The product’s construction determines how the materials are
+    brought together.
+  </p>
+  <a class="link" href="{{ '/collection/' | relative_url }}">Find the forms they become ↗</a>
+</aside>
+
+<section class="editorial-split reverse wrap">
+  <figure class="">
+    <img
+      class=""
+      src="{{ '/assets/images/real-products/laptop-cover-original.jpg' | relative_url }}"
+      alt="Original Laptop Cover photograph on grass, with two brown buttons and white string"
+      loading="lazy"
+      width="1200"
+      height="900"
+    >
+    <figcaption>Laptop Cover · Original TAMANG product photograph</figcaption>
+  </figure>
+  <div>
+    <p class="eyebrow">Read the actual piece</p>
+    <h2>
+      Two origins.<br>
+      One useful cover.
+    </h2>
+    <p>
+      The Laptop Cover combines naturally dyed fabric with hand-crocheted recovered plastic. Ask about the construction,
+      lining and fit of the available piece.
+    </p>
+    <a class="link" href="{{ '/pieces/laptop-cover/' | relative_url }}"
+      >Meet the Laptop Cover <span aria-hidden="true">↗</span></a
+    >
+  </div>
+</section>
+{% include invitation.html %}

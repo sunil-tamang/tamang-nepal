@@ -1,0 +1,71 @@
+---
+title: Journal
+page_id: journal
+permalink: /journal/
+---
+<header class="center-heading wrap spacious">
+  <p class="eyebrow">The TAMANG notebook</p>
+  <h1>Stories in the making.</h1>
+  <p>
+    Notes on materials, making and the place we call home.<br>
+    A closer look at what goes into an everyday piece.
+  </p>
+</header>
+<section class="journal-feature wrap">
+  <figure class="">
+    <img
+      class=""
+      src="{{ '/assets/images/brand/community.webp' | relative_url }}"
+      alt="Actual hands crocheting blue recovered plastic"
+      loading="lazy"
+      width="1200"
+      height="900"
+    >
+    <figcaption>Crocheting by hand · From TAMANG</figcaption>
+  </figure>
+  <div>
+    <p class="eyebrow">Making / A closer look</p>
+    <h2>
+      One strip.<br>
+      Another possibility.
+    </h2>
+    <p>Before a piece takes its shape, there is the patient work of preparing and crocheting the material.</p>
+    <a class="button" href="{{ '/journal/from-bag-to-strip/' | relative_url }}"
+      >From bag to strip <span aria-hidden="true">↗</span></a
+    >
+  </div>
+</section>
+<section class="journal-browser wrap">
+  <div class="section-heading">
+    <h2>From the notebook.</h2>
+    <div class="filter-tabs" role="group" aria-label="Filter journal notes">
+      <button data-note-filter="All" aria-pressed="true">All</button
+      ><button data-note-filter="Materials" aria-pressed="false">Materials</button
+      ><button data-note-filter="Making" aria-pressed="false">Making</button
+      ><button data-note-filter="Place" aria-pressed="false">Place</button>
+    </div>
+  </div>
+  <p id="note-count" class="small muted" aria-live="polite">Six notes to explore.</p>
+  <div class="journal-grid">
+    {% assign notes = site.notes | sort: 'number' -%}
+    {%- for note in notes -%}
+      {%- include note-card.html note=note -%}
+    {%- endfor %}
+  </div>
+</section>
+<section class="paper-band">
+  <div class="text-pair wrap">
+    <h2>
+      A material carries<br>
+      more than a texture.
+    </h2>
+    <div>
+      <p>Its previous use, the hands that work it and the way it is assembled all help shape what it can become.</p>
+      <a class="link" href="{{ '/materials/' | relative_url }}"
+        >Explore the material library <span aria-hidden="true">↗</span></a
+      >
+    </div>
+  </div>
+</section>
+{% include instagram-feed.html -%}
+{%- include invitation.html %}

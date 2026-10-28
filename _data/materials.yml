@@ -1,0 +1,102 @@
+- id: plastic
+  title: Polythene
+  intro:
+    Discarded plastic bags are cleaned, cut into strips and crocheted by hand,
+    without heat. The flexible handwork becomes a useful part of a new piece.
+  origin: Discarded polythene bags
+  process: Clean · cut · crochet by hand
+  result: Crocheted cores and surfaces
+  category: Climbing
+  photo: /assets/images/editorial/polythene.webp
+  photo_alt: Illustrative closeup of clean recovered polythene bags and cut strips
+  caption: Discarded bags, ready for another use.
+  details:
+    - title: From bag to strip
+      text:
+        The bags are cleaned and cut into manageable strips. Preparation makes the
+        material ready for the slower work of crochet.
+    - title: Colour already in the material
+      text:
+        The colours come from the plastic that is available. Combining strips produces
+        visible differences in each handworked surface.
+  note:
+    The crocheted material can be combined with fabric in the finished piece.
+    Ask about the exact construction of the product you choose.
+- id: rice-sacks
+  title: Rice sacks
+  intro:
+    Used rice sacks can have another useful life. The available material is prepared
+    and reworked by hand into a different form.
+  origin: Recovered rice sacks
+  process: Select · prepare · rework
+  result: Material for a new piece
+  category: All
+  photo: /assets/images/editorial/rice-sacks.webp
+  photo_alt:
+    Illustrative recovered woven rice sack material showing its crosshatched
+    weave
+  caption: A woven structure with a previous purpose.
+  details:
+    - title: Start with what remains useful
+      text:
+        The sack’s existing weave and condition help determine which areas can be
+        worked into another form.
+    - title: A different scale
+      text:
+        A material used for carrying goods is prepared and reworked for a smaller
+        everyday use. Its original texture remains part of the story.
+  note:
+    Rice sack material varies by source. Ask which material is used in the particular
+    piece you are considering.
+- id: textiles
+  title: Recovered textiles
+  intro:
+    Existing fabric and offcuts guide what can be made next. Usable areas, colour
+    and construction help define the new form.
+  origin: Existing fabric and textile offcuts
+  process: Read the material · cut · stitch
+  result: Useful carriers and accessories
+  category: Bags
+  photo: /assets/images/editorial/recovered-textiles.webp
+  photo_alt:
+    Illustrative blue olive and cream textile offcuts with raw edges and
+    old seams
+  caption: Existing seams, colours and usable cloth.
+  details:
+    - title: Read the cloth
+      text:
+        Available areas, existing seams and wear help guide where a new pattern
+        can fit. The starting material influences the finished shape.
+    - title: Keep the useful parts working
+      text:
+        Cutting and stitching give the usable fabric another job. An offcut can
+        become a smaller component; a larger section can guide a new form.
+  note:
+    The source and composition can change with the available fabric. Ask us about
+    the current piece rather than assuming every one is identical.
+- id: dyed
+  title: Naturally dyed fabric
+  intro:
+    "This is a separate beginning: we buy fabric and a collaborator dyes it with
+    natural materials. Local women then cut and stitch it into the finished pieces."
+  origin: Purchased fabric
+  process: Natural dye · cut · stitch
+  result: Fabric with individual colour and character
+  category: Pouches
+  photo: /assets/images/editorial/natural-dye.webp
+  photo_alt:
+    Illustrative pale naturally dyed cloth with pink and indigo botanical
+    marks
+  caption: Purchased cloth, coloured with natural materials.
+  details:
+    - title: A separate starting point
+      text:
+        This cloth is not made from the recovered plastic. We purchase fabric and
+        work with a collaborator who dyes it naturally.
+    - title: Colour with variation
+      text:
+        Natural colour and botanical marks give the fabric individual character.
+        The exact fibre, colour and pattern are confirmed for the finished piece.
+  note:
+    The naturally dyed fabric may appear on its own or alongside recovered materials,
+    depending on the product.

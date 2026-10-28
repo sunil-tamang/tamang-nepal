@@ -1,0 +1,65 @@
+<section class="instagram-section page-pad" aria-labelledby="instagram-title">
+  <div class="instagram-heading">
+    <div>
+      <p class="eyebrow">Moments from the work</p>
+      <h2 id="instagram-title">From our Instagram.</h2>
+    </div>
+    <div>
+      <p>What we’re making, what we’re carrying, and a few moments in between.</p>
+      <a class="link" href="{{ site.data.instagram.profile_url }}" target="_blank" rel="noopener noreferrer"
+        >@{{ site.data.instagram.username }} ↗</a
+      >
+    </div>
+  </div>
+  <div class="instagram-gallery">
+    {% for post in site.data.instagram.posts %}
+      <article class="instagram-post">
+        <a
+          class="instagram-photo"
+          href="{{ post.permalink }}"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="{{ post.title | escape }} — open original Instagram post"
+          ><img
+            src="{{ post.image | relative_url }}"
+            alt="{{ post.alt | escape }}"
+            width="{{ post.width }}"
+            height="{{ post.height }}"
+            loading="lazy"
+        ></a>
+        <div class="instagram-post-caption">
+          <h3>{{ post.title }}</h3>
+          <button data-instagram-open="{{ forloop.index0 }}" aria-haspopup="dialog">View here ↗</button>
+        </div>
+        <a class="instagram-credit" href="{{ post.permalink }}" target="_blank" rel="noopener noreferrer"
+          >@{{ site.data.instagram.username }} · Instagram</a
+        >
+      </article>
+    {% endfor %}
+  </div>
+  <p class="instagram-endnote">
+    Selected posts from
+    <a href="{{ site.data.instagram.profile_url }}" target="_blank" rel="noopener noreferrer"
+      >@{{ site.data.instagram.username }} on Instagram ↗</a
+    >
+  </p>
+</section>
+<dialog id="instagram-dialog" aria-labelledby="instagram-dialog-title">
+  <div class="instagram-dialog-top">
+    <h2 id="instagram-dialog-title">From @{{ site.data.instagram.username }}</h2>
+    <button id="close-instagram" aria-label="Close Instagram post">Close ×</button>
+  </div>
+  <div id="instagram-embed"></div>
+  <p id="instagram-status" class="small" role="status"></p>
+  <a
+    id="instagram-original"
+    class="link"
+    href="{{ site.data.instagram.profile_url }}"
+    target="_blank"
+    rel="noopener noreferrer"
+    >Open original on Instagram ↗</a
+  >
+</dialog>
+<script type="application/json" id="instagram-data">
+  [{% for post in site.data.instagram.posts %}{"url":{{ post.permalink | jsonify }},"image":{{ post.image | relative_url | jsonify }},"title":{{ post.title | jsonify }},"alt":{{ post.alt | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}]
+</script>

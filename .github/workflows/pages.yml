@@ -1,0 +1,60 @@
+name: Deploy TAMANG to GitHub Pages
+
+# Nothing publishes on push. Run this manually only when you are ready.
+on:
+  workflow_dispatch:
+    inputs:
+      allow_indexing:
+        description: Allow search engines to index the deployed website
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@4a9ddd6f338a97768b8006bf671dfbad383215f4
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+      - name: Configure Pages
+        id: pages
+        uses: actions/configure-pages@v5
+      - name: Build Jekyll
+        env:
+          JEKYLL_ENV: production
+          SITE_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+          ALLOW_INDEXING: ${{ inputs.allow_indexing }}
+        run: |
+          if [ "$ALLOW_INDEXING" = "true" ]; then
+            bundle exec jekyll build --config _config.yml,_config.production.yml --baseurl "$SITE_BASE_PATH"
+          else
+            bundle exec jekyll build --baseurl "$SITE_BASE_PATH"
+          fi
+      - name: Upload generated site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

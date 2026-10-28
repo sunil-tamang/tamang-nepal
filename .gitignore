@@ -1,0 +1,15 @@
+.jekyll-cache/
+.jekyll-metadata
+.sass-cache/
+.bundle/
+vendor/
+node_modules/
+.sites-runtime/
+.sites-checkout/
+*.tar.gz
+
+# Generated output is included in the download, but rebuilt for GitHub Pages.
+dist/
+_site/
+*.zip
+.DS_Store

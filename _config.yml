@@ -1,0 +1,59 @@
+title: TAMANG Nepal
+description:
+  Bags, pouches and covers made by hand in Kakani, Nepal, using recovered
+  materials and naturally dyed cloth.
+url: ""
+baseurl: ""
+destination: dist
+indexing: false
+permalink: pretty
+markdown: kramdown
+collections:
+  notes:
+    output: true
+    permalink: /journal/:name/
+  products:
+    output: true
+    permalink: /pieces/:name/
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+  - scope:
+      path: ""
+      type: products
+    values:
+      layout: product
+  - scope:
+      path: ""
+      type: notes
+    values:
+      layout: note
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - scripts
+  - node_modules
+  - package.json
+  - package-lock.json
+  - vendor
+  - tests
+  - dist
+  - ASSETS.md
+  - QA.md
+  - GITHUB-PAGES.md
+  - IMAGE-REPLACEMENT.md
+  - CHANGELOG.md
+  - .github
+  - .vscode
+  - .openai
+  - .sites-runtime
+  - .sites-checkout
+  - START-HERE.md
+  - DESIGN-NOTES.md
+  - TAMANG-Nepal.code-workspace
+  - Preview.command
+  - Preview.bat
+keep_files: []

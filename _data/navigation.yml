@@ -1,0 +1,24 @@
+- id: collection
+  label: Products
+  url: /collection/
+  note: Useful things with another beginning
+- id: story
+  label: Our Story
+  url: /story/
+  note: Where the idea began
+- id: materials
+  label: Materials
+  url: /materials/
+  note: Follow the different beginnings
+- id: community
+  label: Makers
+  url: /community/
+  note: Local skills and shared possibilities
+- id: journal
+  label: Journal
+  url: /journal/
+  note: Notes on materials, making and place
+- id: enquire
+  label: Get involved
+  url: /enquire/
+  note: A product, a question, an idea

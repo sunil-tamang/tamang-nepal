@@ -1,0 +1,59 @@
+---
+layout: default
+---
+<article class="journal-article">
+  <header class="article-heading wrap">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ '/journal/' | relative_url }}">Journal</a><span>/</span><span>{{ page.category }}</span>
+    </nav>
+    <p class="eyebrow">A note on {{ page.category | downcase }}</p>
+    <h1>{{ page.title }}</h1>
+    <p class="lead">{{ page.description }}</p>
+  </header>
+  <figure class="article-cover wrap">
+    <img
+      src="{{ page.image | relative_url }}"
+      alt="{{ page.image_alt | escape }}"
+      width="1536"
+      height="1024"
+      fetchpriority="high"
+    >
+    <figcaption>{{ page.caption }}</figcaption>
+  </figure>
+  <div class="article-body">{{ content }}</div>
+  <aside class="article-piece wrap">
+    <img
+      src="{{ '/assets/images/real-products/laptop-cover-original.jpg' | relative_url }}"
+      alt="Original TAMANG Laptop Cover photograph on grass"
+      width="1080"
+      height="1080"
+      loading="lazy"
+    >
+    <div>
+      <p class="eyebrow">From a material to a piece</p>
+      <h2>Read the actual piece.</h2>
+      <p>
+        The Laptop Cover brings naturally dyed fabric and hand-crocheted recovered plastic together. Ask about its
+        particular construction and fit.
+      </p>
+      <a class="button" href="{{ '/pieces/laptop-cover/' | relative_url }}">Explore the cover ↗</a>
+    </div>
+  </aside>
+</article>
+<section class="related-notes wrap">
+  <div class="section-heading">
+    <h2>A little more to read.</h2>
+    <a class="link" href="{{ '/journal/' | relative_url }}">All notes ↗</a>
+  </div>
+  <div class="journal-grid">
+    {% assign notes = site.notes | sort: 'number' -%}
+    {%- assign count = 0 -%}
+    {%- for note in notes -%}
+      {%- if note.url != page.url and count < 3 -%}
+        {%- include note-card.html note=note -%}
+        {%- assign count = count | plus: 1 -%}
+      {%- endif -%}
+    {%- endfor %}
+  </div>
+</section>
+{% include invitation.html %}

@@ -1,0 +1,37 @@
+<article
+  class="catalogue-entry"
+  data-product-card
+  data-category="{{ include.product.category }}"
+  data-material="{{ include.product.material }}"
+  data-title="{{ include.product.title | downcase }}"
+  data-number="{{ include.product.number }}"
+>
+  <span class="catalogue-number" aria-hidden="true">{{ include.product.number | prepend: '0' }}</span>
+  <a class="catalogue-image" href="{{ include.product.url | relative_url }}"
+    ><img
+      src="{{ include.product.image | relative_url }}"
+      alt="{{ include.product.image_alt | escape }}"
+      width="{{ include.product.image_width }}"
+      height="{{ include.product.image_height }}"
+      loading="lazy"
+  ></a>
+  <div class="catalogue-copy">
+    <p class="eyebrow">{{ include.product.category }} / Made by hand</p>
+    <h2>
+      <a href="{{ include.product.url | relative_url }}">{{ include.product.title }}</a>
+    </h2>
+    <p class="lead">{{ include.product.use_short }}</p>
+    <p class="small muted">{{ include.product.appearance }}</p>
+    <div class="catalogue-actions">
+      <a class="link" href="{{ include.product.url | relative_url }}">Meet the piece ↗</a
+      ><button
+        class="save-piece"
+        data-save="{{ include.product.slug }}"
+        aria-pressed="false"
+        aria-label="Save {{ include.product.title }}"
+      >
+        ＋
+      </button>
+    </div>
+  </div>
+</article>

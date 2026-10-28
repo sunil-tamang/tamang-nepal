@@ -1,0 +1,145 @@
+---
+title: Collection
+page_id: collection
+permalink: /collection/
+---
+<header class="catalogue-cover">
+  <div class="wrap">
+    <p class="eyebrow">Handmade in Nepal</p>
+    <h1>Our Products</h1>
+    <p>
+      Everyday things, with different beginnings.<br>
+      Explore the pieces and the materials behind them.
+    </p>
+  </div>
+</header>
+<div class="collection-layout page-pad" id="collection-browser">
+  <section class="collection-intro">
+    <div class="collection-welcome">
+      <div>
+        <p class="eyebrow">Bags, pouches, covers & more</p>
+        <h2>Four useful companions.</h2>
+      </div>
+      <p>
+        For your day out, the little things in your bag, or your next climbing session. Take a look and ask us about a
+        product that interests you.
+      </p>
+    </div>
+    <div class="collection-tools">
+      <div class="filter-tabs" role="group" aria-label="Filter by category">
+        {% assign categories = 'All,Bags,Pouches,Covers,Climbing' | split: ',' -%}
+        {%- for category in categories -%}
+          <button data-filter="{{ category }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}">
+            <span>{{ category }}</span
+            ><span class="filter-count">
+              {%- if category == 'All' -%}
+                {{- site.products | size -}}
+              {%- else -%}
+                {{- site.products | where: 'category', category | size -}}
+              {%- endif -%}
+            </span>
+          </button>
+        {%- endfor %}
+      </div>
+      <div class="search-tools">
+        <label class="search-label"
+          >Find a piece<input
+            id="collection-search"
+            type="search"
+            placeholder="Search the collection"
+            autocomplete="off"></label
+        ><label
+          >Sort<select id="collection-sort">
+            <option value="number">Product order</option>
+            <option value="name">Name A–Z</option>
+          </select></label
+        >
+      </div>
+      <p class="small muted" id="result-count" aria-live="polite">{{ site.products | size }} pieces to explore.</p>
+    </div>
+  </section>
+  <section class="collection-canvas" aria-label="The collection">
+    {% assign products = site.products | sort: 'number' -%}
+    {%- for product in products -%}
+      {%- include collection-piece.html product=product -%}
+    {%- endfor %}
+    <div id="empty-results" hidden>
+      <h2>No pieces found.</h2>
+      <p>Try another material, name or category.</p>
+      <button class="link" id="reset-filters">View all pieces ↗</button>
+    </div>
+  </section>
+</div>
+
+<section class="collection-matrix page-pad" id="collection-matrix" aria-labelledby="matrix-title">
+  <div class="matrix-intro">
+    <p class="eyebrow">A useful comparison</p>
+    <h2 id="matrix-title">What do you want to carry?</h2>
+    <p>
+      Use this index to narrow the choice. Open a piece for its construction details, save it, and ask us to confirm the
+      measurements that matter to you.
+    </p>
+  </div>
+  <div class="matrix-scroll" role="region" aria-label="Product comparison" tabindex="0">
+    <table>
+      <caption class="sr-only">
+        Compare the collection by use, material and the details to confirm
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col">Piece</th>
+          <th scope="col">A place for</th>
+          <th scope="col">Shown material</th>
+          <th scope="col">Check before choosing</th>
+        </tr>
+      </thead>
+      <tbody id="collection-matrix-body">
+        {% assign products = site.products | sort: 'number' -%}
+        {%- for product in products %}
+          <tr data-product-row data-title="{{ product.title | downcase }}">
+            <th scope="row">
+              <a href="{{ product.url | relative_url }}">{{ product.title }} ↗</a>
+            </th>
+            <td>{{ product.use_short }}</td>
+            <td>{{ product.appearance }}</td>
+            <td>{{ product.confirm_short }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+<aside class="collection-note page-pad">
+  <p>These are TAMANG product photos. Ask us for the current colours, exact size and price before choosing a piece.</p>
+  <a class="link" href="{{ '/enquire/#saved-section' | relative_url }}"
+    >View your saved pieces (<span data-saved-count>0</span>) ↗</a
+  >
+</aside>
+<section class="editorial-split wrap">
+  <figure class="">
+    <img
+      class=""
+      src="{{ '/assets/images/editorial/natural-dye.webp' | relative_url }}"
+      alt="Illustrative naturally dyed cloth with botanical marks"
+      loading="lazy"
+      width="1200"
+      height="900"
+    >
+    <figcaption>A separate fabric story · Illustrative photograph</figcaption>
+  </figure>
+  <div>
+    <p class="eyebrow">Made from what’s already here</p>
+    <h2>
+      Different materials.<br>
+      A useful next chapter.
+    </h2>
+    <p>
+      Recovered materials and naturally dyed fabric do not all follow the same journey. The construction of each piece
+      determines how they come together.
+    </p>
+    <a class="link" href="{{ '/materials/' | relative_url }}"
+      >Explore the materials <span aria-hidden="true">↗</span></a
+    >
+  </div>
+</section>
+{% include invitation.html %}

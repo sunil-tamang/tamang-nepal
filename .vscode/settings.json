@@ -1,0 +1,14 @@
+{
+  "liveServer.settings.root": "/dist",
+  "liveServer.settings.host": "127.0.0.1",
+  "files.exclude": {
+    ".jekyll-cache": true,
+    ".jekyll-metadata": true
+  },
+  "search.exclude": {
+    "dist": true
+  },
+  "files.associations": {
+    "*.yml": "yaml"
+  }
+}
