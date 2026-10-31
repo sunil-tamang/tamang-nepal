@@ -2,8 +2,11 @@
 title: Collection
 page_id: collection
 permalink: /collection/
+page_stylesheet: /assets/css/collection.css
 ---
-<div class="ref-inner"><header class="ref-page-heading"><h1>Objects,<br>reconsidered.</h1><p>Every piece begins with a different past.<br>Recovered materials, reimagined for<br>what comes next.</p></header>
-<div class="ref-tools"><div role="group" aria-label="Filter collection"><button data-ref-filter="All" aria-pressed="true">All pieces</button><button data-ref-filter="Pouches" aria-pressed="false">Pouches</button><button data-ref-filter="Carry" aria-pressed="false">Carry</button></div><div><label>Material <select id="ref-material-filter" aria-label="Filter by material"><option value="All">All materials</option><option value="tent">Tent fabric</option><option value="parachute">Parachute fabric</option><option value="offcuts">Offcuts</option><option value="dyed">Naturally dyed cloth</option></select></label><label>Sort <select id="ref-sort" aria-label="Sort collection"><option value="number">Featured</option><option value="name">Name A–Z</option></select></label></div></div>
-<section class="ref-grid" id="ref-catalogue" aria-label="Collection">{% for piece in site.data.reference_products %}{% include reference-card.html piece=piece %}{% endfor %}</section><p id="ref-empty" hidden>No pieces found.</p></div>
-<aside class="ref-follow"><h2>Follow the material.</h2><a href="{{ '/materials/' | relative_url }}">Explore our material library </a></aside><p class="ref-illustrative">Placeholder imagery</p>
+<div class="collection-shell">
+  <header class="collection-introduction"><div><p class="collection-eyebrow">01 / The collection</p><h1>Objects, reconsidered.</h1></div><p>Every piece begins with a different past. <br>Recovered materials, reimagined for <br>what comes next.</p></header>
+  <div class="ref-tools"><div role="group" aria-label="Filter collection">{% assign categories = 'All,Bags,Pouches,Carry' | split: ',' %}{% for category in categories %}<button data-ref-filter="{{ category }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}">{% if category == 'All' %}All pieces ({{ site.data.collection_cards | size }}){% else %}{{ category }} ({{ site.data.collection_cards | where: 'category', category | size }}){% endif %}</button>{% endfor %}</div><div class="collection-selects"><select id="ref-sort" aria-label="Sort collection"><option value="number">Sort by</option><option value="name">Name A–Z</option></select><select id="ref-material-filter" aria-label="Filter by material"><option value="All">All materials</option><option value="rice">Rice bags</option><option value="parachute">Parachute fabric</option><option value="tent">Tent fabric</option><option value="raincoat">Raincoat fabric</option><option value="dyed">Naturally dyed</option><option value="offcuts">Fabric scraps</option></select></div></div>
+  <section class="collection-grid" id="ref-catalogue" aria-label="Collection">{% for card in site.data.collection_cards %}{% include collection-card.html card=card %}{% endfor %}</section>
+  <p id="ref-empty" role="status" hidden>No pieces found.</p>
+</div>

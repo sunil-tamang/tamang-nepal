@@ -33,7 +33,9 @@
       el.setAttribute("aria-pressed", String(active));
       const p = bySlug.get(el.dataset.save);
       el.setAttribute("aria-label", `${active ? "Remove" : "Save"} ${p?.title || "piece"}${active ? " from selection" : " to selection"}`);
-      if (el.classList.contains("save-piece")) {
+      if (el.classList.contains("collection-bookmark")) {
+        el.title = active ? "Remove from selection" : "Save to selection";
+      } else if (el.classList.contains("save-piece")) {
         el.textContent = active ? "Saved" : "Save";
         el.setAttribute(
           "aria-label",

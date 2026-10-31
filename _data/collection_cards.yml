@@ -1,0 +1,42 @@
+- slug: tote-bag
+  number: 1
+  category: Bags
+  materials: rice dyed tent
+  image: /assets/images/real-products/tote_bag.jpg
+  description: Everyday carry made from up-cycled rice bags with naturally dyed fabric and tent lining.
+  tags: [Rice bags, Naturally dyed, Tent lining]
+- slug: glider-pouch
+  number: 2
+  category: Pouches
+  materials: parachute recycled
+  image: /assets/images/collection/glider.jpg
+  description: Made from repurposed parachute fabric, giving new life to high-performance materials.
+  tags: [Parachute fabric, Up-cycled]
+- slug: tent-pouch
+  number: 3
+  category: Pouches
+  materials: tent recycled
+  image: /assets/images/collection/tent.jpg
+  description: Crafted from old tent fabric, designed for everyday use.
+  tags: [Tent fabric, Recycled]
+- slug: poncho-pouch
+  number: 4
+  category: Pouches
+  materials: raincoat dyed
+  image: /assets/images/real-products/poncho_pouch.jpg
+  description: Made from up-cycled raincoats and naturally dyed fabric, finished with reclaimed guy-line.
+  tags: [Raincoat fabric, Naturally dyed]
+- slug: shoe-bag
+  number: 5
+  category: Carry
+  materials: offcuts dyed
+  image: /assets/images/real-products/toiletries-bag.webp
+  description: Made from leftover fabric scraps and naturally dyed materials.
+  tags: [Fabric scraps, Naturally dyed]
+- slug: jutta-bag
+  number: 6
+  category: Bags
+  materials: rice dyed
+  image: /assets/images/brand/everyday.webp
+  description: Everyday bag made from leftover rice bag scraps and naturally dyed fabric.
+  tags: [Rice bags, Naturally dyed]

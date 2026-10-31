@@ -1,7 +1,7 @@
 (() => {
  const $ = (s) => document.querySelector(s), $$ = (s) => [...document.querySelectorAll(s)];
  const cards=$$('[data-ref-card]'), filters=$$('[data-ref-filter]'); let category='All'; const query=(new URLSearchParams(location.search).get('q')||'').trim().toLowerCase();
- function filter(){if(!$('#ref-catalogue'))return; const material=$('#ref-material-filter').value; let count=0; cards.forEach(c=>{c.hidden=!(category==='All'||c.dataset.category===category)||!(material==='All'||c.dataset.refMaterial===material)||!c.dataset.name.toLowerCase().includes(query);if(!c.hidden)count++;});$('#ref-empty').hidden=count>0; const sort=$('#ref-sort').value; cards.sort((a,b)=>sort==='name'?a.dataset.name.localeCompare(b.dataset.name):Number(a.dataset.number)-Number(b.dataset.number)).forEach(c=>$('#ref-catalogue').append(c));}
+ function filter(){if(!$('#ref-catalogue'))return; const material=$('#ref-material-filter').value; let count=0; cards.forEach(c=>{c.hidden=!(category==='All'||c.dataset.category===category)||!(material==='All'||c.dataset.refMaterial.split(' ').includes(material))||!c.dataset.name.toLowerCase().includes(query);if(!c.hidden)count++;});$('#ref-empty').hidden=count>0; const sort=$('#ref-sort').value; cards.sort((a,b)=>sort==='name'?a.dataset.name.localeCompare(b.dataset.name):Number(a.dataset.number)-Number(b.dataset.number)).forEach(c=>$('#ref-catalogue').append(c));}
  filters.forEach(b=>b.addEventListener('click',()=>{category=b.dataset.refFilter;filters.forEach(x=>x.setAttribute('aria-pressed',String(x===b)));filter();}));
  filter();
  $('#ref-material-filter')?.addEventListener('change',filter);$('#ref-sort')?.addEventListener('change',filter);
