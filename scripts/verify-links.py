@@ -68,7 +68,7 @@ for path, p in pages.items():
         if url.fragment and target.resolve() in pages:
             assert url.fragment in pages[target.resolve()].ids, f'Missing fragment: {path} -> {ref}'
         checked += 1
-assert len(pages) == 21, f'Unexpected page count: {len(pages)}'
+assert len(pages) == 28, f'Unexpected page count: {len(pages)}'
 print(f'PASS: {len(pages)} generated pages; {checked} navigation, asset, and fragment targets; embedded JSON, headings, image alt text, noindex.')
 
 # The identity is vectors only: no extra visible text under the wordmark.
@@ -87,6 +87,6 @@ for path,p in pages.items():
     source=path.read_text()
     if '<script type="application/json" id="product-data">' not in source: continue
     records=json.loads(re.search(r'<script type="application/json" id="product-data">(.*?)</script>',source,re.S).group(1))
-    assert len(records)==4
-    assert {r['slug'] for r in records} == {'tote-bag','laptop-cover','chalk-bag','toiletries-bag'}
-print('PASS: CSS assets and fonts; only four current products in every page record.')
+    assert len(records)==9
+    assert {r['slug'] for r in records} == {'tote-bag','laptop-cover','chalk-bag','toiletries-bag','glider-pouch','tent-pouch','poncho-pouch','shoe-bag','jutta-bag'}
+print('PASS: CSS assets and fonts; six displayed catalogue products; original records retained without duplicate slugs.')

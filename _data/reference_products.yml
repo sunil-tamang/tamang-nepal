@@ -1,0 +1,84 @@
+- title: Glider Pouch
+  slug: glider-pouch
+  number: 1
+  category: Pouches
+  material: parachute
+  material_name: Material details coming soon
+  image: /assets/images/reference/parachute.jpg
+  home_image: /assets/images/reference/parachute-home.jpg
+  detail_image: /assets/images/reference/parachute-home.jpg
+  image_alt: "Existing project photograph used as a placeholder for Glider Pouch"
+  url: /pieces/glider-pouch/
+  subtitle: Details coming soon
+  description: "Placeholder description for the Glider Pouch. Materials, features and dimensions will be updated."
+  placeholder: true
+- title: Tent Pouch
+  slug: tent-pouch
+  number: 2
+  category: Pouches
+  material: tent
+  material_name: Material details coming soon
+  image: /assets/images/reference/tent.jpg
+  home_image: /assets/images/reference/tent-home.jpg
+  detail_image: /assets/images/reference/tent-detail.jpg
+  image_alt: "Existing project photograph used as a placeholder for Tent Pouch"
+  url: /pieces/tent-pouch/
+  subtitle: Details coming soon
+  description: "Placeholder description for the Tent Pouch. Materials, features and dimensions will be updated."
+  placeholder: true
+- title: Poncho Pouch
+  slug: poncho-pouch
+  number: 3
+  category: Pouches
+  material: offcuts
+  material_name: Material details coming soon
+  image: /assets/images/real-products/poncho_pouch.jpg
+  home_image: /assets/images/real-products/poncho_pouch.jpg
+  detail_image: /assets/images/real-products/poncho_pouch.jpg
+  image_alt: "Existing project photograph used as a placeholder for Poncho Pouch"
+  url: /pieces/poncho-pouch/
+  subtitle: Details coming soon
+  description: "Placeholder description for the Poncho Pouch. Materials, features and dimensions will be updated."
+  placeholder: true
+- title: Tote Bag
+  slug: tote-bag
+  number: 4
+  category: Carry
+  material: dyed
+  material_name: Material details coming soon
+  image: /assets/images/real-products/tote_bag.jpg
+  home_image: /assets/images/real-products/tote_bag.jpg
+  detail_image: /assets/images/real-products/tote_bag.jpg
+  image_alt: "Existing project photograph used as a placeholder for Tote Bag"
+  url: /pieces/tote-bag/
+  subtitle: Details coming soon
+  description: "Placeholder description for the Tote Bag. Materials, features and dimensions will be updated."
+  placeholder: true
+- title: Shoe Bag
+  slug: shoe-bag
+  number: 5
+  category: Carry
+  material: offcuts
+  material_name: Material details coming soon
+  image: /assets/images/real-products/toiletries-bag.webp
+  home_image: /assets/images/real-products/toiletries-bag.webp
+  detail_image: /assets/images/real-products/toiletries-bag.webp
+  image_alt: "Existing project photograph used as a placeholder for Shoe Bag"
+  url: /pieces/shoe-bag/
+  subtitle: Details coming soon
+  description: "Placeholder description for the Shoe Bag. Materials, features and dimensions will be updated."
+  placeholder: true
+- title: Jutta Bag
+  slug: jutta-bag
+  number: 6
+  category: Carry
+  material: offcuts
+  material_name: Material details coming soon
+  image: /assets/images/brand/everyday.webp
+  home_image: /assets/images/brand/everyday.webp
+  detail_image: /assets/images/brand/everyday.webp
+  image_alt: "Existing project photograph used as a placeholder for Jutta Bag"
+  url: /pieces/jutta-bag/
+  subtitle: Details coming soon
+  description: "Placeholder description for the Jutta Bag. Materials, features and dimensions will be updated."
+  placeholder: true

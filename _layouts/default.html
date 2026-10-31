@@ -13,60 +13,49 @@
     <link rel="icon" href="{{ '/assets/favicon.svg' | relative_url }}" type="image/svg+xml">
     <link
       rel="preload"
-      href="{{ '/assets/fonts/cormorant-garamond-variable.ttf' | relative_url }}"
+      href="{{ '/assets/fonts/inter-variable.ttf' | relative_url }}"
       as="font"
       type="font/ttf"
       crossorigin
     >
     <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/css/reference.css' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/css/spacing.css' | relative_url }}">
+    <script src="{{ '/assets/js/reference.js' | relative_url }}" defer></script>
     <script src="{{ '/assets/js/site.js' | relative_url }}" defer></script>
   </head>
-  <body data-page="{{ page.page_id }}">
+  <body data-page="{{ page.page_id | default: page.layout }}">
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
-      <a class="brand" href="{{ '/' | relative_url }}" aria-label="TAMANG Nepal home"
-        ><img
-          src="{{ '/assets/images/tamang-logo.svg' | relative_url }}"
-          alt="TAMANG and mountain icon"
-          width="602"
-          height="151"
-      ></a>
+      <a class="brand" href="{{ '/' | relative_url }}" aria-label="TAMANG Nepal home"><img src="{{ '/assets/images/tamang-logo.svg' | relative_url }}" alt="TAMANG and mountain icon" width="602" height="151"></a>
       <nav id="main-nav" aria-label="Main navigation">
-        {% for item in site.data.navigation -%}
-          <a
-            href="{{ item.url | relative_url }}"
-            {% if page.page_id == item.id
-              or page.layout == 'product'
-              and item.id == 'collection'
-              or page.layout == 'note'
-              and item.id == 'journal'
-            %}
-              aria-current="page"
-            {% endif %}
-          >
-            {{- item.label -}}
-            {%- if forloop.last %} ↗{% endif -%}
-          </a>
-        {%- endfor %}
+        <a href="{{ '/collection/' | relative_url }}"{% if page.page_id == 'collection' or page.layout == 'product' or page.layout == 'reference-product' %} aria-current="page"{% endif %}>Shop</a>
+        <a href="{{ '/materials/' | relative_url }}"{% if page.page_id == 'materials' %} aria-current="page"{% endif %}>Materials</a>
+        <a class="nav-story" href="{{ '/story/' | relative_url }}"{% if page.page_id == 'story' %} aria-current="page"{% endif %}>Our story</a>
       </nav>
-      <a class="header-saved" href="{{ '/enquire/#saved-section' | relative_url }}" aria-label="View saved pieces"
-        >Saved <span data-saved-count>0</span></a
-      >
-      <button class="menu-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-haspopup="dialog">
-        <span>Explore</span><span class="menu-icon" aria-hidden="true"><i></i><i></i></span>
-      </button>
+      <div class="header-utilities">
+        <a class="header-social header-icon" href="{{ site.data.instagram.profile_url }}" aria-label="TAMANG on Instagram" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.8" r=".7" fill="currentColor" stroke="none"/></svg></a>
+        <button class="header-search-toggle header-icon" aria-label="Search products" aria-haspopup="dialog" aria-controls="header-search"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg></button>
+        <a class="header-saved header-icon" href="{{ '/enquire/#saved-section' | relative_url }}" aria-label="View saved pieces"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 7h14l2 15H3L5 7Z"/><path d="M8 8V5a4 4 0 0 1 8 0v3"/></svg><span class="header-selection-count" data-saved-count>0</span></a>
+      </div>
+      <p class="header-motto">Rooted in people<br>Made for what’s next</p>
+      <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-menu" aria-haspopup="dialog"><span>Menu</span><span class="menu-icon" aria-hidden="true"><i></i><i></i></span></button>
     </header>
+    <dialog id="header-search" aria-labelledby="header-search-title"><div class="header-search-top"><h2 id="header-search-title">Find a piece</h2><button type="button" id="header-search-close">Close</button></div><form action="{{ '/collection/' | relative_url }}" method="get"><label for="header-search-input">Search products</label><div class="header-search-field"><input id="header-search-input" type="search" name="q" placeholder="Search the collection" required autofocus><button type="submit" class="ref-solid">Search</button></div></form></dialog>
     {% include mobile-menu.html %}
     <main id="main">{{ content }}</main>
-    <footer class="site-footer wrap">
+    {% assign reference_page = false %}{% if page.page_id == 'home' or page.page_id == 'story' %}{% assign reference_page = true %}{% endif %}
+    {% if reference_page %}<footer class="ref-footer"><a href="{{ '/' | relative_url }}" aria-label="TAMANG Nepal home"><img src="{% if page.page_id == 'home' %}{{ '/assets/images/reference/wordmark.svg' | relative_url }}{% else %}{{ '/assets/images/reference/wordmark-inner.png' | relative_url }}{% endif %}" alt="TAMANG Handmade in Nepal" width="186" height="82"></a><nav aria-label="Footer navigation"><a href="{{ '/materials/' | relative_url }}">Materials</a><a href="{{ '/story/' | relative_url }}">Story</a><a href="{{ '/enquire/' | relative_url }}">Enquiries</a></nav>{% if page.page_id == 'home' %}<small>Private design preview · Illustrative imagery</small>{% endif %}</footer>
+    {% elsif page.page_id == 'collection' or page.page_id == 'materials' or page.page_id == 'reference-product' %}
+    {% else %}    <footer class="site-footer wrap">
       <div class="footer-top">
         <div>
           <a class="footer-brand" href="{{ '/' | relative_url }}" aria-label="TAMANG home"
             ><img
-              src="{{ '/assets/images/tamang-logo.svg' | relative_url }}"
+              src="{% if page.page_id == 'home' %}{{ '/assets/images/reference/wordmark.png' | relative_url }}{% else %}{{ '/assets/images/reference/wordmark-inner.png' | relative_url }}{% endif %}"
               alt="TAMANG and mountain icon"
-              width="602"
-              height="151"
+              width="186"
+              height="82"
               loading="lazy"
           ></a>
           <p>Kakani, Nuwakot, Nepal.</p>
@@ -80,18 +69,19 @@
           <a href="{{ '/care/' | relative_url }}">Care & information</a
           ><a href="{{ '/enquire/#saved-section' | relative_url }}">Saved pieces (<span data-saved-count>0</span>)</a
           ><a href="{{ site.data.instagram.profile_url }}" target="_blank" rel="noopener noreferrer"
-            >@{{ site.data.instagram.username }} ↗</a
-          ><a href="#main">Back to top ↑</a>
+            >@{{ site.data.instagram.username }}</a
+          ><a href="#main">Back to top</a>
         </div>
       </div>
       <div class="footer-meta">
         <span>© {{ 'now' | date: '%Y' }} TAMANG Nepal</span
-        ><span>Some material and landscape images are illustrative.</span>
+        ><span>{% unless page.page_id == 'home' %}Some material and landscape images are illustrative.{% endunless %}</span>
       </div>
     </footer>
+{% endif %}
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
     <script type="application/json" id="product-data">
-      [{% assign products = site.products | sort: 'number' %}{% for product in products %}{"slug":{{ product.slug | jsonify }},"title":{{ product.title | jsonify }},"category":{{ product.category | jsonify }},"material":{{ product.material | jsonify }},"image":{{ product.image | relative_url | jsonify }},"url":{{ product.url | relative_url | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}]
+      [{% assign products = site.data.reference_products | concat: site.products | uniq: 'slug' %}{% for product in products %}{"slug":{{ product.slug | jsonify }},"title":{{ product.title | jsonify }},"category":{{ product.category | jsonify }},"material":{{ product.material | jsonify }},"image":{{ product.image | relative_url | jsonify }},"url":{{ product.url | relative_url | jsonify }}}{% unless forloop.last %},{% endunless %}{% endfor %}]
     </script>
   </body>
 </html>

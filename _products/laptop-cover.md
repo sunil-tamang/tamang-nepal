@@ -4,8 +4,8 @@ slug: laptop-cover
 number: 2
 category: Covers
 material: dyed
-image: /assets/images/real-products/laptop-cover-original.jpg
-image_alt: "Original TAMANG Laptop Cover photograph: cream botanical fabric, two brown buttons and white string, lying diagonally on grass"
+image: /assets/images/real-products/toiletries-bag.webp
+image_alt: "Placeholder photograph from the project; Laptop Cover photograph currently unavailable"
 appearance: Cream botanical fabric
 description:
   A laptop cover combining naturally dyed cloth with hand-crocheted upcycled plastic.

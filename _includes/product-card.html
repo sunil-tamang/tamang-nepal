@@ -19,7 +19,7 @@
       <span class="product-index">{{ include.product.number | prepend: '0' }} / {{ include.product.category }}</span>
       <a href="{{ include.product.url | relative_url }}">
         {{- include.product.title }}
-        <span aria-hidden="true">↗</span></a
+        </a
       >
     </div>
     <button
@@ -28,7 +28,7 @@
       aria-pressed="false"
       aria-label="Save {{ include.product.title }}"
     >
-      ＋
+      Save
     </button>
   </div>
   <p class="product-use-label">{{ include.product.use_short }}</p>

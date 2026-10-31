@@ -17,7 +17,7 @@ permalink: /enquire/
   <figure class="">
     <img
       class=""
-      src="{{ '/assets/images/real-products/tote-bag.webp' | relative_url }}"
+      src="{{ '/assets/images/real-products/tote_bag.jpg' | relative_url }}"
       alt="Actual TAMANG botanical Tote Bag outdoors"
       loading="lazy"
       width="1200"
@@ -42,7 +42,7 @@ permalink: /enquire/
       ><label for="enquiry-piece">A particular piece <span class="muted">(optional)</span></label
       ><select id="enquiry-piece" name="piece">
         <option value="">Choose a piece</option>
-        {% assign products = site.products | sort: 'number' -%}
+        {% assign products = site.data.reference_products | concat: site.products | uniq: 'slug' -%}
         {%- for product in products %}
           <option value="{{ product.slug }}">{{ product.title }}</option>
         {% endfor %}</select

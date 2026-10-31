@@ -1,56 +1,9 @@
 <dialog id="mobile-menu" aria-label="Explore TAMANG">
-  <div class="mobile-menu-top">
-    <a class="brand" href="{{ '/' | relative_url }}" aria-label="TAMANG Nepal home"
-      ><img
-        src="{{ '/assets/images/tamang-logo.svg' | relative_url }}"
-        alt="TAMANG and mountain icon"
-        width="602"
-        height="151"
-    ></a>
-    <button id="close-menu" class="menu-close" autofocus>
-      <span>Close</span><span class="close-icon" aria-hidden="true"></span>
-    </button>
-  </div>
-  <div class="mobile-menu-intro">
-    <span class="eyebrow">A look around TAMANG</span><span>Handmade in Kakani, Nepal.</span>
-  </div>
-  <nav class="mobile-nav" aria-label="Mobile navigation">
-    {% for item in site.data.navigation %}
-      <a
-        href="{{ item.url | relative_url }}"
-        {% if page.page_id == item.id or page.layout == 'product' and item.id == 'collection' %}
-          aria-current="page"
-        {% endif %}
-      >
-        {%- case item.id -%}
-          {%- when 'story' -%}
-            {%- assign nav_photo = '/assets/images/brand/founder.webp' -%}
-          {%- when 'community' -%}
-            {%- assign nav_photo = '/assets/images/brand/community.webp' -%}
-          {%- when 'materials' -%}
-            {%- assign nav_photo = '/assets/images/editorial/polythene.webp' -%}
-          {%- when 'collection' -%}
-            {%- assign nav_photo = '/assets/images/real-products/tote-bag.webp' -%}
-          {%- else -%}
-            {%- assign nav_photo = '/assets/images/brand/everyday.webp' -%}
-        {%- endcase -%}
-        <img class="mobile-nav-photo" src="{{ nav_photo | relative_url }}" alt="" width="90" height="90" loading="lazy">
-        <span class="mobile-nav-number" aria-hidden="true">0{{ forloop.index }}</span>
-        <span class="mobile-nav-copy"
-          ><span class="mobile-nav-label">{{ item.label }}</span
-          ><span class="mobile-nav-note">{{ item.note }}</span></span
-        >
-        <span class="mobile-nav-arrow">{% include arrow.html %}</span>
-      </a>
-    {% endfor %}
+  <div class="mobile-menu-top"><a class="mobile-menu-brand" href="{{ '/' | relative_url }}" aria-label="TAMANG Nepal home"><img src="{{ '/assets/images/tamang-logo.svg' | relative_url }}" alt="TAMANG" width="602" height="151"></a><button id="close-menu" class="menu-close" autofocus>Close</button></div>
+  <nav class="ref-mobile-links" aria-label="Mobile navigation">
+    <a href="{{ '/collection/' | relative_url }}"{% if page.page_id == 'collection' or page.layout == 'product' or page.layout == 'reference-product' %} aria-current="page"{% endif %}>Shop</a>
+    <a href="{{ '/materials/' | relative_url }}"{% if page.page_id == 'materials' %} aria-current="page"{% endif %}>Materials</a>
+    <a href="{{ '/story/' | relative_url }}"{% if page.page_id == 'story' %} aria-current="page"{% endif %}>Our story</a>
   </nav>
-  <div class="mobile-menu-bottom">
-    <a href="{{ '/enquire/#saved-section' | relative_url }}"
-      >Your saved products <span class="menu-saved-count" data-saved-count>0</span></a
-    >
-    <a href="{{ site.data.instagram.profile_url }}" target="_blank" rel="noopener noreferrer"
-      >Instagram <span aria-hidden="true">↗</span></a
-    >
-  </div>
-  <p class="mobile-menu-place">TAMANG <span aria-hidden="true">/</span> Kakani, Nuwakot</p>
+  <div class="mobile-menu-actions"><a class="mobile-selection" href="{{ '/enquire/#saved-section' | relative_url }}">Your selection <span data-saved-count>0</span></a><a class="mobile-instagram" href="{{ site.data.instagram.profile_url }}" target="_blank" rel="noopener noreferrer">Instagram</a></div>
 </dialog>

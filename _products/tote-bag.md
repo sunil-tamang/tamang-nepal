@@ -4,8 +4,8 @@ slug: tote-bag
 number: 1
 category: Bags
 material: dyed
-image: /assets/images/real-products/tote-bag.webp
-image_alt: Cream TAMANG Tote Bag with botanical marks, hanging outdoors
+image: /assets/images/real-products/tote_bag.jpg
+image_alt: TAMANG tote bags photographed outdoors
 appearance: Cream botanical fabric
 description:
   An everyday tote, with versions using naturally dyed cloth, recovered rice sacks or

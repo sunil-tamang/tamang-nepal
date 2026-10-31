@@ -4,8 +4,8 @@ slug: chalk-bag
 number: 3
 category: Climbing
 material: plastic
-image: /assets/images/real-products/chalk-bag.webp
-image_alt: Orange TAMANG Chalk Bag with drawstring closure, photographed on a table
+image: /assets/images/real-products/chalk_bag.jpg
+image_alt: Blue and cream TAMANG Chalk Bag photographed during use
 appearance: Orange fabric with drawstring
 description:
   A fabric chalk bag with a drawstring closure. Recovered materials are used within its

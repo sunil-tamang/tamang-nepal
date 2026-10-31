@@ -40,3 +40,11 @@ Four real selected posts have local thumbnails in `assets/images/instagram/`; ex
 Headings use self-hosted Cormorant Garamond at regular weight. Body text uses the existing self-hosted Inter. Both are distributed with their SIL Open Font Licenses in `assets/fonts`. Cormorant Garamond source: https://github.com/google/fonts/tree/main/ofl/cormorantgaramond. No external font service or license subscription is needed.
 
 Use TAMANG photographs and identity for the user's own TAMANG project; no broader image-rights grant is implied.
+
+## Exact reference reproduction (local design preview)
+
+`assets/images/reference/` contains image crops from the two user-supplied TAMANG design references. These are illustrative design assets, not verified photographs of available inventory. The hero and material banner were edited only to remove overlaid interface typography so text and controls can remain live HTML. Original source photographs and four current product records are retained unchanged. `_data/reference_products.yml` holds the three reference examples separately. Their dimensions, prices, availability and detailed specifications are unconfirmed.
+
+## Temporary six-product catalogue
+
+The displayed catalogue now contains Glider Pouch, Tent Pouch, Poncho Pouch, Tote Bag, Shoe Bag and Jutta Bag. Copy and material fields are explicitly temporary. Images are reused from existing `reference/`, `real-products/` and `brand/` assets as placeholders; they do not verify the named product's appearance or construction. Sandal Carrier and Parachute Pouch are no longer listed; their URLs remain as notices. Original product source records and photos remain intact.

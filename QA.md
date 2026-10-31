@@ -27,3 +27,12 @@ The launchers were syntax-checked here; they were not run on the user's own Mac 
 Instagram's live service is outside this static project. Local images and original links work independently; native embed availability depends on Instagram and the visitor's browser. The suite checks the blocked-script fallback; no account credentials or API token are included.
 
 No checkout, payments, automated message sending, GitHub publication or hosted Site update was performed.
+
+## Supplied-reference reproduction — 31 October 2026
+
+- Rebuilt the homepage, collection, material library, story and product detail layouts from the supplied references using live HTML/Liquid text and controls.
+- Reference imagery is labelled as illustrative where the supplied design labels it. The four original product records and existing routes remain. Three reference example routes are added separately.
+- Jekyll build and link/asset/fragment/JSON checks pass for 24 generated pages. Both JavaScript files pass Node syntax checking.
+- Browser verified: category filtering (Carry yields one item), product thumbnail switching, saving/removing a reference product, material query links and switches, and mobile menu open/close.
+- Browser checked all five reference pages at 390px: no horizontal overflow or broken loaded images. Desktop layouts visually compared with supplied references.
+- No commit, push, deployment, DNS or workflow change.

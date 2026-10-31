@@ -1,0 +1,6 @@
+{% assign piece = include.piece %}
+<article class="ref-card" data-ref-card data-category="{{ piece.category }}" data-ref-material="{{ piece.material }}" data-number="{{ piece.number }}" data-name="{{ piece.title }}">
+<a href="{{ piece.url | relative_url }}"><img src="{% if include.home %}{{ piece.home_image | relative_url }}{% else %}{{ piece.image | relative_url }}{% endif %}" alt="{{ piece.image_alt | default: piece.title | escape }}" width="600" height="440" loading="lazy"></a>
+<div class="ref-card-name"><a href="{{ piece.url | relative_url }}">{{ piece.title }}</a>{% unless include.home %}<button data-save="{{ piece.slug }}" aria-pressed="false">Save</button>{% endunless %}</div>
+<p>{% if include.home %}{{ piece.subtitle }}{% else %}{{ piece.material_name }}{% endif %}</p>
+</article>

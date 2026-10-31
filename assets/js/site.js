@@ -32,13 +32,18 @@
       const active = saved.includes(el.dataset.save);
       el.setAttribute("aria-pressed", String(active));
       const p = bySlug.get(el.dataset.save);
+      el.setAttribute("aria-label", `${active ? "Remove" : "Save"} ${p?.title || "piece"}${active ? " from selection" : " to selection"}`);
       if (el.classList.contains("save-piece")) {
-        el.textContent = active ? "✓" : "＋";
+        el.textContent = active ? "Saved" : "Save";
         el.setAttribute(
           "aria-label",
           `${active ? "Remove" : "Save"} ${p?.title || "piece"}${active ? " from saved pieces" : ""}`,
         );
-      } else el.textContent = active ? "Piece saved ✓" : "Save piece ＋";
+      } else if (el.closest(".ref-card")) {
+        el.textContent = active ? "Saved" : "Save";
+      } else if (el.classList.contains("ref-solid")) {
+        el.textContent = active ? "Saved to selection" : "Save to selection";
+      } else el.textContent = active ? "Saved" : "Save";
     });
     const list = $("#saved-items");
     if (!list) return;
@@ -116,11 +121,17 @@
       $(".site-header"),
       $("#main"),
       $(".site-footer"),
+      $(".ref-footer"),
     ].filter(Boolean);
     let returnFocus,
       previousInert = [],
-      fallback = false;
+      fallback = false,
+      closing = false,
+      closeTimer;
     const finishClose = () => {
+      clearTimeout(closeTimer);
+      closing = false;
+      menuDialog.classList.remove("is-closing");
       document.body.classList.remove("menu-open");
       menu.setAttribute("aria-expanded", "false");
       previousInert.forEach(([element, value]) => {
@@ -129,12 +140,18 @@
       previousInert = [];
       (returnFocus?.isConnected ? returnFocus : menu).focus();
     };
-    const closeMenu = () => {
-      if (!menuDialog.hasAttribute("open")) return;
-      if (!fallback) menuDialog.close();
+    const closeMenu = (destination) => {
+      if (!menuDialog.hasAttribute("open") || closing) return;
+      closing = true;
+      const complete = () => {
+        if (!fallback) menuDialog.close();
+        else { menuDialog.removeAttribute("open"); finishClose(); }
+        if (typeof destination === "string") location.assign(destination);
+      };
+      if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) complete();
       else {
-        menuDialog.removeAttribute("open");
-        finishClose();
+        menuDialog.classList.add("is-closing");
+        closeTimer = setTimeout(complete, 220);
       }
     };
     menu.addEventListener("click", () => {
@@ -161,7 +178,13 @@
       closeMenu();
     });
     menuDialog.addEventListener("click", (event) => {
-      if (event.target.closest("a")) closeMenu();
+      const link = event.target.closest("a");
+      if (link && link.target !== "_blank" && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
+        event.preventDefault(); closeMenu(link.href);
+      } else if (event.target === menuDialog) {
+        const box = menuDialog.getBoundingClientRect();
+        if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) closeMenu();
+      }
     });
     document.addEventListener("keydown", (event) => {
       if (!menuDialog.hasAttribute("open")) return;
