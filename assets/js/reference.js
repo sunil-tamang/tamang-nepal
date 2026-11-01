@@ -6,9 +6,18 @@
  filter();
  $('#ref-material-filter')?.addEventListener('change',filter);$('#ref-sort')?.addEventListener('change',filter);
  $$('[data-ref-image]').forEach(b=>b.addEventListener('click',()=>{$('#ref-gallery-image').src=b.dataset.refImage;$$('[data-ref-image]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));}));
- const searchDialog=$('#header-search'),searchToggle=$('.header-search-toggle');
- searchToggle?.addEventListener('click',()=>{searchDialog.showModal();$('#header-search-input').focus();});
- $('#header-search-close')?.addEventListener('click',()=>searchDialog.close());
- searchDialog?.addEventListener('close',()=>searchToggle.focus());
+ const searchPanel=$('#header-search'),searchToggle=$('.header-search-toggle'),header=$('.site-header');
+ if(searchPanel&&searchToggle&&header){
+   const closeSearch=(restore=true)=>{if(!header.classList.contains('search-open'))return;if(restore)searchToggle.focus();header.classList.remove('search-open');searchToggle.setAttribute('aria-expanded','false');searchPanel.setAttribute('aria-hidden','true');searchPanel.inert=true;};
+   searchToggle.addEventListener('click',()=>{if(header.classList.contains('search-open')){closeSearch();return;}header.classList.add('search-open');searchPanel.inert=false;searchPanel.setAttribute('aria-hidden','false');searchToggle.setAttribute('aria-expanded','true');$('#header-search-input').focus();});
+   $('#header-search-close')?.addEventListener('click',()=>closeSearch());
+   header.addEventListener('keydown',e=>{if(e.key==='Escape'&&header.classList.contains('search-open')){e.preventDefault();closeSearch();}});
+   document.addEventListener('click',e=>{if(!header.contains(e.target))closeSearch(false);});
+   header.addEventListener('focusout',e=>{if(!header.contains(e.relatedTarget))closeSearch(false);});
+   $('.menu-toggle')?.addEventListener('click',()=>closeSearch(false));
+ }
+ // Limit casual image saving without interfering with page text or keyboard navigation.
+ document.addEventListener('contextmenu',event=>{if(event.target instanceof Element&&event.target.closest('img,picture'))event.preventDefault();});
+ document.addEventListener('dragstart',event=>{if(event.target instanceof HTMLImageElement)event.preventDefault();});
  const panel=$('#ref-material-copy'),photo=$('#ref-material-photo'),tabs=$$('[data-ref-tab]'); if(panel&&photo){const original=panel.innerHTML,base=photo.src.replace(/[^/]+$/,'');const photos={tent:'tent-fabric.jpg',parachute:'parachute-home.jpg',offcuts:'seams.jpg',dyed:'dyed-cloth.jpg'};function select(id,update=true){if(!photos[id])id='tent';panel.innerHTML=id==='tent'?original:$('#ref-panel-'+id).innerHTML;photo.src=base+photos[id];photo.alt='Illustrative '+tabs.find(t=>t.dataset.refTab===id).textContent.trim();tabs.forEach(t=>t.setAttribute('aria-pressed',String(t.dataset.refTab===id)));if(update){const u=new URL(location.href);u.searchParams.set('material',id);history.replaceState(null,'',u);}}tabs.forEach(t=>t.addEventListener('click',()=>select(t.dataset.refTab)));const query=new URLSearchParams(location.search).get('material');select(({textiles:'offcuts','rice-sacks':'offcuts',plastic:'tent'})[query]||query||'tent',false);}
 })();

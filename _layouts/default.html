@@ -36,13 +36,13 @@
       </nav>
       <div class="header-utilities">
         <a class="header-social header-icon" href="{{ site.data.instagram.profile_url }}" aria-label="TAMANG on Instagram" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.8" r=".7" fill="currentColor" stroke="none"/></svg></a>
-        <button class="header-search-toggle header-icon" aria-label="Search products" aria-haspopup="dialog" aria-controls="header-search"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg></button>
+        <button class="header-search-toggle header-icon" aria-label="Search products" aria-expanded="false" aria-controls="header-search"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg></button>
         <a class="header-saved header-icon" href="{{ '/enquire/#saved-section' | relative_url }}" aria-label="View saved pieces"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 7h14l2 15H3L5 7Z"/><path d="M8 8V5a4 4 0 0 1 8 0v3"/></svg><span class="header-selection-count" data-saved-count>0</span></a>
       </div>
       <p class="header-motto">Rooted in people<br>Made for what’s next</p>
       <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-menu" aria-haspopup="dialog"><span>Menu</span><span class="menu-icon" aria-hidden="true"><i></i><i></i></span></button>
+      <div id="header-search" class="navbar-search" aria-hidden="true" inert><form action="{{ '/collection/' | relative_url }}" method="get" role="search"><label class="sr-only" for="header-search-input">Search products</label><input id="header-search-input" type="search" name="q" placeholder="Find your next piece" required autocomplete="off"><button type="submit" class="navbar-search-submit">Search</button><button type="button" id="header-search-close">Close</button></form></div>
     </header>
-    <dialog id="header-search" aria-labelledby="header-search-title"><div class="header-search-top"><h2 id="header-search-title">Find a piece</h2><button type="button" id="header-search-close">Close</button></div><form action="{{ '/collection/' | relative_url }}" method="get"><label for="header-search-input">Search products</label><div class="header-search-field"><input id="header-search-input" type="search" name="q" placeholder="Search the collection" required autofocus><button type="submit" class="ref-solid">Search</button></div></form></dialog>
     {% include mobile-menu.html %}
     <main id="main">{{ content }}</main>
     {% assign reference_page = false %}{% if page.page_id == 'home' or page.page_id == 'story' %}{% assign reference_page = true %}{% endif %}
