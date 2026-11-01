@@ -1,0 +1,13 @@
+(() => {
+  const photo=document.querySelector('#product-detail-photo');if(!photo)return;
+  const views=[...document.querySelectorAll('[data-product-view]')],dots=[...document.querySelectorAll('.product-gallery-dots i')],status=document.querySelector('#product-gallery-status');
+  let current=0;
+  const show=index=>{current=(index+views.length)%views.length;const view=views[current];photo.src=view.dataset.image;photo.alt=view.dataset.alt;photo.style.setProperty('--photo-scale',view.dataset.scale);views.forEach((button,i)=>button.setAttribute('aria-pressed',String(i===current)));dots.forEach((dot,i)=>dot.classList.toggle('active',i===current));status.textContent=current===0?'Full view. Detail views use crops of this photograph.':`Detail crop ${current} of the same photograph.`;};
+  views.forEach((button,i)=>button.addEventListener('click',()=>show(i)));
+  document.querySelector('.product-gallery-prev').addEventListener('click',()=>show(current-1));document.querySelector('.product-gallery-next').addEventListener('click',()=>show(current+1));
+  document.querySelector('.product-gallery-stage').addEventListener('keydown',event=>{if(event.key==='ArrowLeft'||event.key==='ArrowRight'){event.preventDefault();show(current+(event.key==='ArrowRight'?1:-1));}});
+  const quantity=document.querySelector('#product-quantity');document.querySelectorAll('[data-quantity-change]').forEach(button=>button.addEventListener('click',()=>{quantity.value=Math.max(1,Math.min(99,(Number.parseInt(quantity.value,10)||1)+Number(button.dataset.quantityChange)));quantity.dispatchEvent(new Event('change',{bubbles:true}));}));
+  quantity.addEventListener('change',()=>{quantity.value=Math.max(1,Math.min(99,Number.parseInt(quantity.value,10)||1));});
+  const addForm=document.querySelector('[data-product-cart-form]');addForm?.addEventListener('submit',event=>{event.preventDefault();if(!addForm.reportValidity())return;document.dispatchEvent(new CustomEvent('tamang:cart-add',{detail:{slug:addForm.dataset.productSlug,quantity:Math.max(1,Math.min(99,Number.parseInt(quantity.value,10)||1))}}));});
+  const dialog=document.querySelector('#product-lightbox'),expand=document.querySelector('.product-gallery-expand');expand.addEventListener('click',()=>{const enlarged=dialog.querySelector('img');enlarged.src=photo.src;enlarged.alt=photo.alt;dialog.showModal();});document.querySelector('#product-lightbox-close').addEventListener('click',()=>dialog.close());dialog.addEventListener('close',()=>expand.focus());dialog.addEventListener('click',event=>{if(event.target===dialog){const box=dialog.getBoundingClientRect();if(event.clientX<box.left||event.clientX>box.right||event.clientY<box.top||event.clientY>box.bottom)dialog.close();}});
+})();

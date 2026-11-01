@@ -8,114 +8,44 @@
     products = JSON.parse($("#product-data")?.textContent || "[]");
   } catch {}
   const bySlug = new Map(products.map((p) => [p.slug, p]));
-  const key = "tamang-saved-v2";
-  let saved = [];
-  try {
-    const raw = JSON.parse(localStorage.getItem(key) || "[]");
-    if (Array.isArray(raw))
-      saved = [
-        ...new Set(raw.filter((s) => typeof s === "string" && bySlug.has(s))),
-      ].slice(0, 30);
-  } catch {}
+  let storage;
+  try { storage=window.localStorage; } catch {}
+  const cart=window.TamangCart.createCart(products,{storage,eventTarget:window});
+  const clampQuantity=window.TamangCart.quantity;
   let toastTimer;
-  const notify = (text) => {
-    const el = $("#toast");
-    if (!el) return;
-    el.textContent = text;
-    el.classList.add("visible");
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => el.classList.remove("visible"), 2600);
-  };
-  function renderSaved() {
-    $$("[data-saved-count]").forEach((el) => (el.textContent = saved.length));
-    $$("[data-save]").forEach((el) => {
-      const active = saved.includes(el.dataset.save);
-      el.setAttribute("aria-pressed", String(active));
-      const p = bySlug.get(el.dataset.save);
-      el.setAttribute("aria-label", `${active ? "Remove" : "Save"} ${p?.title || "piece"}${active ? " from selection" : " to selection"}`);
-      if (el.classList.contains("collection-bookmark")) {
-        el.title = active ? "Remove from selection" : "Save to selection";
-      } else if (el.classList.contains("save-piece")) {
-        el.textContent = active ? "Saved" : "Save";
-        el.setAttribute(
-          "aria-label",
-          `${active ? "Remove" : "Save"} ${p?.title || "piece"}${active ? " from saved pieces" : ""}`,
-        );
-      } else if (el.closest(".ref-card")) {
-        el.textContent = active ? "Saved" : "Save";
-      } else if (el.classList.contains("ref-solid")) {
-        el.textContent = active ? "Saved to selection" : "Save to selection";
-      } else el.textContent = active ? "Saved" : "Save";
-    });
-    const list = $("#saved-items");
-    if (!list) return;
-    list.replaceChildren();
-    $("#saved-empty").hidden = saved.length > 0;
-    saved.forEach((slug) => {
-      const p = bySlug.get(slug);
-      if (!p) return;
-      const row = document.createElement("div");
-      row.className = "saved-item";
-      const img = document.createElement("img");
-      img.src = p.image;
-      img.alt = "";
-      img.width = 90;
-      img.height = 90;
-      const a = document.createElement("a");
-      a.href = p.url;
-      a.textContent = p.title + " ↗";
-      const b = document.createElement("button");
-      b.type = "button";
-      b.textContent = "Remove ×";
-      b.setAttribute("aria-label", "Remove " + p.title + " from saved pieces");
-      b.addEventListener("click", () => {
-        saved = saved.filter((s) => s !== slug);
-        persist();
-        const next = $(".saved-item button");
-        if (next) next.focus();
-        else {
-          $("#saved-title").setAttribute("tabindex", "-1");
-          $("#saved-title").focus();
-        }
-        notify("Piece removed");
-      });
-      row.append(img, a, b);
-      list.append(row);
+  const notify=text=>{const element=$("#toast");if(!element)return;element.textContent=text;element.classList.add("visible");clearTimeout(toastTimer);toastTimer=setTimeout(()=>element.classList.remove("visible"),2600);};
+  function renderCartSummary(){
+    const summary=$("#enquiry-selection-summary");if(!summary)return;
+    const items=cart.getItems();summary.replaceChildren();
+    const heading=document.createElement("h3");heading.textContent="Your selection";summary.append(heading);
+    const list=document.createElement("ul");items.forEach(item=>{const row=document.createElement("li"),name=document.createElement("span"),count=document.createElement("span");name.textContent=bySlug.get(item.slug).title;count.textContent=`× ${item.quantity}`;row.append(name,count);list.append(row);});summary.append(list);
+    if(!items.length){const empty=document.createElement("p");empty.textContent="Your cart is empty. Add products before preparing an enquiry.";summary.append(empty);}
+    const submit=$("#enquiry-form button[type=submit]");if(submit)submit.disabled=!items.length;
+  }
+  function renderCart(){
+    const items=cart.getItems(),total=cart.total();
+    $$("[data-saved-count]").forEach(element=>element.textContent=total);
+    $$("[data-cart-add], [data-save]").forEach(element=>{const slug=element.dataset.cartAdd||element.dataset.save,product=bySlug.get(slug);if(!product)return;element.removeAttribute("aria-pressed");element.setAttribute("aria-label",`Add ${product.title} to cart`);const existing=items.find(item=>item.slug===slug);element.title=existing?`${existing.quantity} in cart. Add more`:"Add to cart";if(!element.querySelector("svg"))element.textContent="Add to cart";});
+    renderCartSummary();
+    const output=$("#enquiry-output");if(output)output.hidden=true;
+    const list=$("#saved-items");if(!list)return;list.replaceChildren();$("#saved-empty").hidden=items.length>0;
+    ["#clear-selection","#enquire-selection"].forEach(selector=>{const control=$(selector);if(control)control.disabled=!items.length;});
+    items.forEach(item=>{
+      const product=bySlug.get(item.slug),row=document.createElement("article");row.className="selection-row";row.dataset.slug=item.slug;
+      const photo=document.createElement("a");photo.className="selection-image";photo.href=product.url;photo.setAttribute("aria-label",product.title);const image=document.createElement("img");image.src=product.image;image.alt="";image.width=300;image.height=264;photo.append(image);
+      const copy=document.createElement("div");copy.className="selection-row-copy";const heading=document.createElement("h2"),link=document.createElement("a");link.href=product.url;link.textContent=product.title;heading.append(link);const description=document.createElement("p");description.textContent=product.description||"Details will be confirmed for the available piece.";copy.append(heading,description);
+      const quantity=document.createElement("div");quantity.className="selection-quantity";const minus=document.createElement("button"),plus=document.createElement("button"),input=document.createElement("input");minus.type=plus.type="button";minus.textContent="−";plus.textContent="+";minus.dataset.cartAction="decrease";plus.dataset.cartAction="increase";input.dataset.cartAction="quantity";minus.setAttribute("aria-label",`Decrease quantity for ${product.title}`);plus.setAttribute("aria-label",`Increase quantity for ${product.title}`);input.type="number";input.min="1";input.max="99";input.inputMode="numeric";input.value=item.quantity;input.setAttribute("aria-label",`Quantity for ${product.title}`);minus.disabled=item.quantity===1;plus.disabled=item.quantity===99;
+      const update=(value,action)=>{cart.setQuantity(item.slug,value);const fresh=$(`.selection-row[data-slug="${item.slug}"] [data-cart-action="${action}"]`);if(fresh&&!fresh.disabled)fresh.focus();else $(`.selection-row[data-slug="${item.slug}"] input`)?.focus();if($("#selection-status"))$("#selection-status").textContent=`${product.title}: quantity ${clampQuantity(value)}.`;};
+      minus.addEventListener("click",()=>update(item.quantity-1,"decrease"));plus.addEventListener("click",()=>update(item.quantity+1,"increase"));input.addEventListener("change",()=>update(input.value,"quantity"));quantity.append(minus,input,plus);
+      const remove=document.createElement("button");remove.type="button";remove.className="selection-remove";remove.setAttribute("aria-label",`Remove ${product.title} from cart`);const svg=document.createElementNS("http://www.w3.org/2000/svg","svg");svg.setAttribute("viewBox","0 0 24 24");svg.setAttribute("aria-hidden","true");const path=document.createElementNS(svg.namespaceURI,"path");path.setAttribute("d","M4 6h16M9 6V3h6v3M6 6l1 15h10l1-15M10 9v9m4-9v9");svg.append(path);remove.append(svg);
+      remove.addEventListener("click",()=>{cart.remove(item.slug);const next=$(".selection-remove",list);if(next)next.focus();else $("#saved-title").focus();notify("Product removed from cart");});row.append(photo,copy,quantity,remove);list.append(row);
     });
   }
-  function persist() {
-    try {
-      localStorage.setItem(key, JSON.stringify(saved));
-    } catch {}
-    renderSaved();
-  }
-  $$("[data-save]").forEach((el) =>
-    el.addEventListener("click", () => {
-      const slug = el.dataset.save;
-      if (!bySlug.has(slug)) return;
-      const active = saved.includes(slug);
-      saved = active ? saved.filter((s) => s !== slug) : [...saved, slug];
-      persist();
-      notify(
-        active
-          ? "Piece removed from your saved pieces"
-          : "Piece saved for your enquiry",
-      );
-    }),
-  );
-  renderSaved();
-  window.addEventListener("storage", (e) => {
-    if (e.key !== key) return;
-    try {
-      const v = JSON.parse(e.newValue || "[]");
-      saved = Array.isArray(v)
-        ? [...new Set(v.filter((s) => bySlug.has(s)))]
-        : [];
-    } catch {
-      saved = [];
-    }
-    renderSaved();
-  });
+  function addToCart(slug,count){if(!bySlug.has(slug))return;const before=cart.getItems().find(item=>item.slug===slug)?.quantity||0;cart.add(slug,count);const after=cart.getItems().find(item=>item.slug===slug)?.quantity||0;notify(after>before?`${bySlug.get(slug).title} added to cart`:'Maximum quantity is 99 per product');}
+  $$("[data-cart-add], [data-save]").forEach(element=>element.addEventListener("click",()=>{const input=element.dataset.cartQuantity?$(element.dataset.cartQuantity):null;addToCart(element.dataset.cartAdd||element.dataset.save,input?input.value:1);}));
+  document.addEventListener("tamang:cart-add",event=>addToCart(event.detail?.slug,event.detail?.quantity));
+  cart.subscribe(renderCart);
+  $("#clear-selection")?.addEventListener("click",()=>{cart.clear();$("#saved-title").focus();notify("Selection cleared");});
   const menu = $(".menu-toggle"),
     menuDialog = $("#mobile-menu");
   if (menu && menuDialog) {
@@ -533,111 +463,33 @@
       false,
     );
   }
-  $("#clear-local-data")?.addEventListener("click", () => {
-    saved = [];
-    persist();
-    notify("Saved pieces cleared");
-  });
-  const form = $("#enquiry-form");
-  if (form) {
-    const piece = params.get("piece");
-    if (bySlug.has(piece)) $("#enquiry-piece").value = piece;
-    const interest = params.get("interest");
-    if (["product", "materials", "collaboration", "other"].includes(interest))
-      $("#enquiry-interest").value = interest;
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      if (!form.reportValidity()) return;
-      const chosen = bySlug.get($("#enquiry-piece").value),
-        selected = [...new Set([...saved, ...(chosen ? [chosen.slug] : [])])];
-      const interestText =
-        $("#enquiry-interest").selectedOptions[0].textContent;
-      const lines = [
-        "TAMANG Nepal — enquiry",
-        "",
-        `Name: ${$("#enquiry-name").value.trim()}`,
-        `Email: ${$("#enquiry-email").value.trim()}`,
-        `Interested in: ${interestText}`,
-        "",
-      ];
-      if (selected.length)
-        lines.push(
-          "Pieces:",
-          ...selected.map((s) => "• " + bySlug.get(s).title),
-          "",
-        );
-      lines.push(
-        $("#enquiry-message").value.trim(),
-        "",
-        "Please confirm available colours, dimensions, pricing and delivery.",
-      );
-      $("#enquiry-draft").value = lines.join("\n");
-      $("#enquiry-output").hidden = false;
-      $("#copy-status").textContent =
-        "Your note is ready. Nothing has been sent.";
-      $("#draft-title").focus();
-      $("#enquiry-output").scrollIntoView?.({
-        behavior: window.matchMedia?.("(prefers-reduced-motion: reduce)")
-          .matches
-          ? "auto"
-          : "smooth",
-        block: "start",
-      });
+  $("#clear-local-data")?.addEventListener("click",()=>{cart.clear();notify("Cart cleared");});
+  const composer=$("#enquiry-composer");
+  if(composer){
+    let composerTrigger;
+    const openComposer=()=>{renderCartSummary();composerTrigger=document.activeElement;if(!composer.open)composer.showModal();$("#enquiry-name").focus();};
+    $("#enquire-selection")?.addEventListener("click",openComposer);
+    $("#close-enquiry-composer")?.addEventListener("click",()=>composer.close());
+    composer.addEventListener("close",()=>{if(composerTrigger?.isConnected)composerTrigger.focus();});
+    if(bySlug.has(params.get("piece"))){
+      addToCart(params.get("piece"),clampQuantity(params.get("quantity")));
+      const clean=new URL(location.href);clean.searchParams.delete("piece");clean.searchParams.delete("quantity");window.history?.replaceState(null,"",clean.pathname+clean.search+clean.hash);
+      queueMicrotask(openComposer);
+    }
+  }
+  const form=$("#enquiry-form");
+  if(form){
+    form.addEventListener("input",()=>{$("#enquiry-output").hidden=true;});
+    form.addEventListener("submit",event=>{
+      event.preventDefault();if(!form.reportValidity())return;
+      if(!cart.getItems().length){renderCartSummary();notify("Add products before preparing an enquiry");return;}
+      $("#enquiry-draft").value=window.TamangCart.buildEnquiry(products,cart.getItems(),{name:$("#enquiry-name").value,email:$("#enquiry-email").value,message:$("#enquiry-message").value});
+      $("#enquiry-output").hidden=false;$("#copy-status").textContent="Your note is ready. Nothing has been sent.";$("#draft-title").focus();$("#enquiry-output").scrollIntoView?.({behavior:window.matchMedia?.("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"});
     });
-    $("#copy-enquiry").addEventListener("click", async () => {
-      const text = $("#enquiry-draft").value;
-      try {
-        if (!navigator.clipboard?.writeText)
-          throw new Error("Clipboard unavailable");
-        await navigator.clipboard.writeText(text);
-        $("#copy-status").textContent =
-          "Enquiry copied. Nothing has been sent.";
-      } catch {
-        $("#enquiry-draft").focus();
-        $("#enquiry-draft").select();
-        $("#copy-status").textContent =
-          "Select and copy the note above. Nothing has been sent.";
-      }
-    });
-    $("#download-enquiry").addEventListener("click", () => {
-      const blob = new Blob([$("#enquiry-draft").value], {
-          type: "text/plain;charset=utf-8",
-        }),
-        url = URL.createObjectURL(blob),
-        a = document.createElement("a");
-      a.href = url;
-      a.download = "TAMANG-Nepal-enquiry.txt";
-      document.body.append(a);
-      a.click();
-      a.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
-      $("#copy-status").textContent =
-        "Enquiry downloaded. Nothing has been sent.";
-    });
+    $("#copy-enquiry").addEventListener("click",async()=>{try{if(!navigator.clipboard?.writeText)throw new Error("Clipboard unavailable");await navigator.clipboard.writeText($("#enquiry-draft").value);$("#copy-status").textContent="Enquiry copied. Nothing has been sent.";}catch{$("#enquiry-draft").focus();$("#enquiry-draft").select();$("#copy-status").textContent="Select and copy the note above. Nothing has been sent.";}});
+    $("#download-enquiry").addEventListener("click",()=>{const url=URL.createObjectURL(new Blob([$("#enquiry-draft").value],{type:"text/plain;charset=utf-8"})),link=document.createElement("a");link.href=url;link.download="TAMANG-Nepal-enquiry.txt";document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);$("#copy-status").textContent="Enquiry downloaded. Nothing has been sent.";});
   }
 
-  // Useful starters stay local until the visitor prepares their note.
-  $$("[data-enquiry-prompt]").forEach((button) =>
-    button.addEventListener("click", () => {
-      const subject = button.dataset.enquiryPrompt;
-      const starters = {
-        product:
-          "Could you confirm the dimensions, available colours and price of the piece I am interested in?",
-        materials:
-          "I would like to know more about the materials and construction of a particular piece.",
-        collaboration:
-          "I would like to discuss a collaboration. Here is the idea, quantity and timing I have in mind:",
-      };
-      const message = $("#enquiry-message");
-      if (!message || !starters[subject]) return;
-      $("#enquiry-interest").value = subject;
-      if (!message.value.includes(starters[subject]))
-        message.value = message.value.trim()
-          ? message.value.trim() + "\n\n" + starters[subject]
-          : starters[subject];
-      message.focus();
-    }),
-  );
   // Real post previews work without third-party scripts. Native embeds load on request.
   const socialDialog = $("#instagram-dialog");
   if (socialDialog) {

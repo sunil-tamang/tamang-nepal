@@ -5,5 +5,5 @@
     <span class="collection-number" aria-hidden="true">0{{ include.card.number }}</span>
     <div class="collection-card-copy"><h2 id="collection-title-{{ piece.slug }}">{{ piece.title }}</h2><p>{{ include.card.description }}</p><div class="collection-tags">{% for tag in include.card.tags %}<span>{{ tag }}</span>{% endfor %}</div><span class="collection-open" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></span></div>
   </a>
-  <button class="collection-bookmark" data-save="{{ piece.slug }}" aria-pressed="false" aria-label="Save {{ piece.title }} to selection"><svg viewBox="0 0 20 24" aria-hidden="true"><path d="M4 2h12a1 1 0 0 1 1 1v18l-7-5-7 5V3a1 1 0 0 1 1-1Z"/></svg></button>
+  <button class="collection-bookmark" data-cart-add="{{ piece.slug }}" aria-label="Add {{ piece.title }} to cart">{% include shopping-bag-icon.html %}</button>
 </article>

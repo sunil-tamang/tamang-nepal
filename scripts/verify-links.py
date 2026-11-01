@@ -68,7 +68,7 @@ for path, p in pages.items():
         if url.fragment and target.resolve() in pages:
             assert url.fragment in pages[target.resolve()].ids, f'Missing fragment: {path} -> {ref}'
         checked += 1
-assert len(pages) == 28, f'Unexpected page count: {len(pages)}'
+assert len(pages) == 37, f'Unexpected page count: {len(pages)}'
 print(f'PASS: {len(pages)} generated pages; {checked} navigation, asset, and fragment targets; embedded JSON, headings, image alt text, noindex.')
 
 # The identity is vectors only: no extra visible text under the wordmark.

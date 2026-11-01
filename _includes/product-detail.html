@@ -1,0 +1,29 @@
+{% assign card = site.data.collection_cards | where: 'slug', piece.slug | first %}
+{% assign photo = card.image | default: piece.image %}
+{% assign description = card.description | default: piece.description %}
+<section class="product-detail-shell">
+  <nav class="product-detail-breadcrumb" aria-label="Breadcrumb"><a href="{{ '/collection/' | relative_url }}">Collection</a><span aria-hidden="true"> / </span><span>{{ piece.title }}</span></nav>
+  <div class="product-detail-grid">
+    <div class="product-detail-media">
+      <div class="product-gallery-layout">
+        <div class="product-gallery-thumbs" role="group" aria-label="Image views">
+          {% assign scales = '1,1.7,2.2' | split: ',' %}{% for scale in scales %}<button type="button" data-product-view="{{ forloop.index0 }}" data-image="{{ photo | relative_url }}" data-scale="{{ scale }}" data-alt="{{ piece.image_alt | default: piece.title | escape }}{% unless forloop.first %} — crop of the same photograph{% endunless %}" aria-label="{% if forloop.first %}Full view{% else %}Detail crop {{ forloop.index | minus: 1 }}{% endif %}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}"><img src="{{ photo | relative_url }}" alt="" width="160" height="160" style="--photo-scale:{{ scale }}" loading="lazy"></button>{% endfor %}
+        </div>
+        <div class="product-gallery-stage" role="region" aria-label="{{ piece.title }} image gallery" tabindex="0">
+          <img id="product-detail-photo" src="{{ photo | relative_url }}" alt="{{ piece.image_alt | default: piece.title | escape }}" width="1200" height="1400" fetchpriority="high">
+          <button class="product-gallery-expand" type="button" aria-label="Enlarge product image"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5m6 0h5v5M4 15v5h5m6 0h5v-5"/></svg></button>
+          <button type="button" class="product-gallery-prev" aria-label="Previous image"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 5-7 7 7 7"/></svg></button><button type="button" class="product-gallery-next" aria-label="Next image"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 5 7 7-7 7"/></svg></button>
+          <div class="product-gallery-dots" aria-hidden="true"><i class="active"></i><i></i><i></i></div>
+        </div>
+      </div>
+      <p class="product-gallery-note" id="product-gallery-status" aria-live="polite">Full view. Detail views use crops of this photograph.</p>
+      <section class="product-related" aria-labelledby="product-related-title"><h2 id="product-related-title">Also in this collection</h2><div>{% assign related_count = 0 %}{% for related_card in site.data.collection_cards %}{% unless related_card.slug == piece.slug %}{% if related_count < 4 %}{% assign related = site.data.reference_products | where: 'slug', related_card.slug | first %}<a href="{{ related.url | relative_url }}"><img src="{{ related_card.image | relative_url }}" alt="{{ related.title }}" width="240" height="200" loading="lazy"><span>{{ related.title }}</span></a>{% assign related_count = related_count | plus: 1 %}{% endif %}{% endunless %}{% endfor %}</div></section>
+    </div>
+    <div class="product-detail-copy"><p class="product-detail-kicker">0{{ piece.number }} / {{ piece.title }}</p><h1>{{ piece.title }}</h1><p class="product-detail-description">{{ description }}</p>
+      <div class="product-detail-actions"><form data-product-cart-form data-product-slug="{{ piece.slug }}"><div class="product-quantity"><button type="button" data-quantity-change="-1" aria-label="Decrease quantity">−</button><label class="sr-only" for="product-quantity">Quantity requested</label><input id="product-quantity" name="quantity" type="number" min="1" max="99" value="1" inputmode="numeric"><button type="button" data-quantity-change="1" aria-label="Increase quantity">+</button></div><button class="product-enquire-button" type="submit">{% include shopping-bag-icon.html %}Add to cart</button></form><button type="button" class="product-save" data-cart-add="{{ piece.slug }}" data-cart-quantity="#product-quantity" aria-label="Add {{ piece.title }} to cart">{% include shopping-bag-icon.html %}</button></div>
+      <ul class="product-detail-values">{% for tag in card.tags %}<li>{% include piece-material-icon.html label=tag %}<span>{{ tag }}</span></li>{% endfor %}<li><svg viewBox="0 0 24 26" aria-hidden="true"><path d="m2 20 6-8 4 4 4-10 6 14M7 5l2 2 3-5"/></svg><span>Made in Nepal</span></li></ul>
+      <div class="product-detail-accordions"><details><summary>Material & making</summary><p>{% if source_product.composition %}{{ source_product.composition }} {{ source_product.making }}{% else %}{{ description }}{% endif %}</p></details><details><summary>Dimensions</summary><p>Dimensions will be confirmed for the available piece.</p></details><details><summary>Care notes</summary><p>{{ source_product.care | default: 'Care instructions will be confirmed for the available fabric and construction before washing.' }}</p></details><details><summary>Enquiries</summary><p>Ask about available colours, dimensions, materials and delivery.</p><a href="{{ '/enquire/' | relative_url }}?piece={{ piece.slug }}">Prepare an enquiry</a></details></div>
+    </div>
+  </div>
+</section>
+<dialog id="product-lightbox" aria-label="Enlarged product image"><button type="button" id="product-lightbox-close">Close</button><img src="{{ photo | relative_url }}" alt="{{ piece.image_alt | default: piece.title | escape }}" width="1200" height="1400"></dialog>

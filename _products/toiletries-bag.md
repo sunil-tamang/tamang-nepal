@@ -1,4 +1,7 @@
 ---
+permalink: /collection/toiletries-bag/
+page_stylesheet: /assets/css/product-detail.css
+page_script: /assets/js/product-detail.js
 title: Toiletries Bag
 slug: toiletries-bag
 number: 4

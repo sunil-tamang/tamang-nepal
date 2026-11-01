@@ -1,4 +1,7 @@
 ---
+permalink: /collection/laptop-cover/
+page_stylesheet: /assets/css/product-detail.css
+page_script: /assets/js/product-detail.js
 title: Laptop Cover
 slug: laptop-cover
 number: 2

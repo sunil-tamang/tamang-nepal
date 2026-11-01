@@ -1,4 +1,7 @@
 ---
+permalink: /collection/chalk-bag/
+page_stylesheet: /assets/css/product-detail.css
+page_script: /assets/js/product-detail.js
 title: Chalk Bag
 slug: chalk-bag
 number: 3

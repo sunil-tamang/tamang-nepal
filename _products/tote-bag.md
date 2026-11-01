@@ -1,4 +1,7 @@
 ---
+permalink: /collection/tote-bag/
+page_stylesheet: /assets/css/product-detail.css
+page_script: /assets/js/product-detail.js
 title: Tote Bag
 slug: tote-bag
 number: 1
